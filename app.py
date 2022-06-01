@@ -60,4 +60,4 @@ if __name__ == "__main__":
     path0 = "./static/images/img.png"
     path1 = "./static/images/img_1.png"
     shutil.copyfile("./static/images/img.png", "./static/images/img_1.png")
-    app.run()
+    app.run(port=5010)
