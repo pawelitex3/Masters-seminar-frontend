@@ -38,53 +38,112 @@
  
         <div class="row">
             <div class="col-lg-6">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                          <button id="step1" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Krok 1: ustal liczbę wierzchołków
-                          </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <input id="number_of_vertices" type="number" class="form-control">
-                            <button id="add_no_vertices" class="btn btn-lg btn-primary btn-block" type="button">Zatwierdź</button>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                          <button id="step2" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Krok 2: wstaw krawędzie do grafu
-                          </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <div class="col-6">
-                                <input id="beginning" type="number">
+                <div class="row">
+                    <div class="col">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                  <button id="step1" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="button">
+                                    Krok 1: ustal liczbę wierzchołków
+                                  </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                      <div class="row">
+                                          <div class="col-6">
+                                            <input id="number_of_vertices" type="number" class="form-control">
+                                          </div>
+                                          <div class="col-2">
+        
+                                          </div>
+                                          <div class="col-4">
+                                            <button id="add_no_vertices" class="btn btn-lg btn-primary btn-block" type="button" role="button">Zatwierdź</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <input id="end" type="number">
+        
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                  <button id="step2" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" role="button">
+                                    Krok 2: wstaw krawędzie do grafu
+                                  </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Początek krawędzi:
+                                        </div>
+                                        <div class="col-2">
+        
+                                        </div>
+                                        <div class="col-4">
+                                            <input id="beginning" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Koniec krawędzi:
+                                        </div>
+                                        <div class="col-2"></div>
+                                        <div class="col-4">
+                                            <input id="end" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button id="add_edge" class="btn btn-lg btn-primary btn-block">Dodaj krawędź</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
-                            <button id="add_edge" class="btn btn-lg btn-primary btn-block">Dodaj krawędź</button>
-                          </div>
+        
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                  <button id="step3" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Krok 3: narysuj graf
+                                  </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                    <button id="draw" class="btn btn-lg btn-primary btn-block">Rysuj graf</button>
+                                  </div>
+                                </div>
+                            </div>
+        
                         </div>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                          <button id="step3" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Krok 3: narysuj graf
-                          </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <button id="draw" class="btn btn-lg btn-primary btn-block">Rysuj graf</button>
-                          </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-6">
+                                Liczba wierzchołków: 
+                            </div>
+                            <div class="col-6" id="no_vertices">
+                
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Nr wierzchołka</th>
+                                        <th scope="col">Lista sąsiadów</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="adjacency_list">
+                                    </tbody>
+                                  </table>
+                            </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- <div class="row">
@@ -135,6 +194,7 @@
                 </div>
             </div>
         </div>
+        
  
         <footer class="footer">
             <p>&copy; Paweł Dekowski 2022</p>

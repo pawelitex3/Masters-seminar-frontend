@@ -71,7 +71,12 @@ $(function() {
                 type: 'POST',
                 success: function(response) {
                     console.log(response);
+                    id = "neighbour_vertex_"
+                    for (var i = 0; i < parseInt($('#number_of_vertices').val()); i++) {
+                        $("#adjacency_list").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
+                    }
                     $('#no_vertices').text($('#number_of_vertices').val());
+                    
                 },
                 error: function(error) {
                     console.log(error);
@@ -95,6 +100,8 @@ $(function() {
                 data: data_test,
                 success: function(response) {
                     console.log(response);
+                    $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val());
+                    $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val());
                 },
                 error: function(error) {
                     console.log(error);
