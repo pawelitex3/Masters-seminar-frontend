@@ -8,6 +8,7 @@ app = Flask(__name__)
 image_number = 1
 number_of_vertices = 0
 adjacency_list = []
+weights = []
 
 @app.route("/")
 def main():
@@ -20,6 +21,7 @@ def previous(no_vertices):
     number_of_vertices = int(no_vertices)
     for _ in range(number_of_vertices):
         adjacency_list.append([])
+        weights.append([])
     return 'success'
 
 
@@ -35,8 +37,11 @@ def add_edge():
     print(request)
     beginning = int(request.args.get('beginning'))
     end = int(request.args.get('end'))
+    weight = float(request.args.get('weight'))
     adjacency_list[beginning].append(end)
     adjacency_list[end].append(beginning)
+    adjacency_list[beginning].append(weight)
+    adjacency_list[end].append(weight)
     print(adjacency_list)
     return jsonify(adjacency_list)
 
@@ -49,15 +54,20 @@ def draw_graph():
             edges.append((i, adjacency_list[i][j]))
 
     Graph = nx.Graph()
+    Graph.add_nodes_from([i for i in range(number_of_vertices)])
     Graph.add_edges_from(edges)
     nx.draw(Graph, with_labels=True, node_size=800, font_color='#FFFFFF')
     plt.savefig("./static/images/img_1.png")
     plt.cla()
     return 'success'
 
+@app.route("/reset", methods=['DELETE'])
+def reset():
+    global image_number, number_of_vertices, adjacency_list, weights
+    image_number = 1
+    number_of_vertices = 0
+    adjacency_list = []
+    weights = []
 
 if __name__ == "__main__":
-    path0 = "./static/images/img.png"
-    path1 = "./static/images/img_1.png"
-    shutil.copyfile("./static/images/img.png", "./static/images/img_1.png")
     app.run(port=5010)

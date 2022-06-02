@@ -1,3 +1,6 @@
+var numberOfSteps = 4
+
+
 $(function() {
     $('#vertex').click(function() {
 
@@ -25,7 +28,7 @@ $(function() {
                     console.log(response);
                     path = "../static/images/img_" + response + ".png?rand=" + Math.random();
                     $("#graph").attr("src", path);
-                    if(response == 4) {
+                    if(response == numberOfSteps) {
                         $('#next').prop('disabled', true);
                     }
                     $('#previous').prop('disabled', false);
@@ -80,6 +83,12 @@ $(function() {
                     $('#end').attr('min', 0);
                     $('#beginning').attr('max', parseInt($('#number_of_vertices').val())-1);
                     $('#end').attr('max', parseInt($('#number_of_vertices').val())-1);
+                    $('#collapseTwo').collapse();
+                    $('#graphProperties').prop('hidden', false);
+                    
+                    setGraphType();
+
+                    setAlgorithm();
                 },
                 error: function(error) {
                     console.log(error);
@@ -94,7 +103,8 @@ $(function() {
         'click': function() {
             data_test = {
                 beginning: $('#beginning').val(),
-                end: $('#end').val()
+                end: $('#end').val(),
+                weight: $('#weight').val()
             };
             console.log(data_test);
             $.ajax({
@@ -103,8 +113,8 @@ $(function() {
                 data: data_test,
                 success: function(response) {
                     console.log(response);
-                    $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val());
-                    $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val());
+                    $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val() + "(" + $('#weight').val() + ")");
+                    $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val() + "(" + $('#weight').val() + ")");
                 },
                 error: function(error) {
                     console.log(error);
@@ -133,3 +143,56 @@ $(function() {
         }
     });
 });
+
+$(function() {
+    $('input[type=radio][name=graphType]').change(function() {
+        setGraphType();
+    });
+});
+
+$(function() {
+    $('input[type=radio][name=algorithmType]').change(function() {
+        setAlgorithm();
+    });
+});
+
+$(function() {
+    $('#reset').on({
+        'click': function() {
+            $("#graphProperties").text("");
+            $.ajax({
+                url: '/reset'
+            });
+        }
+    });
+});
+
+function setGraphType() {
+    if($('input[type=radio][name=graphType]:checked').val() == 'simpleGraph') {
+        $("#graphTypeLabel").text("Graf prosty");
+    }
+    else if($('input[type=radio][name=graphType]:checked').val() == 'directedGraph') {
+        $("#graphTypeLabel").text("Digraf prosty");
+    }
+}
+
+function setAlgorithm() {
+    if($('input[type=radio][name=algorithmType]:checked').val() == 'bfs') {
+        $("#algorithmLabel").text("Przeszukiwanie wszerz (BFS)");
+    }
+    else if($('input[type=radio][name=algorithmType]:checked').val() == 'dfs') {
+        $("#algorithmLabel").text("Przeszukiwanie w głąb (DFS)");
+    }
+    else if($('input[type=radio][name=algorithmType]:checked').val() == 'kruskal') {
+        $("#algorithmLabel").text("Algorytm Kruskala");
+    }
+    else if($('input[type=radio][name=algorithmType]:checked').val() == 'dijkstra') {
+        $("#algorithmLabel").text("Algorytm Dijkstry");
+    }
+    else if($('input[type=radio][name=algorithmType]:checked').val() == 'prim') {
+        $("#algorithmLabel").text("Algorytm Prima");
+    }
+    else if($('input[type=radio][name=algorithmType]:checked').val() == 'bellmanFord') {
+        $("#algorithmLabel").text("Algorytm Bellmana-Forda");
+    }
+}
