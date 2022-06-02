@@ -1,39 +1,39 @@
 var numberOfSteps = 4
 
 
-$(function() {
-    $('#vertex').click(function() {
+$(function () {
+    $('#vertex').click(function () {
 
         $.ajax({
-            url: '/vertex/' + $('#number_of_vertices').val(),
+            url: '/vertex/' + $('#numberOfVerticesInput').val(),
             type: 'POST',
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                console.log($('#number_of_vertices').val());
+                console.log($('#numberOfVerticesInput').val());
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
     });
 });
 
-$(function() {
+$(function () {
     $('#next').on({
-        'click': function(){
+        'click': function () {
             $.ajax({
                 url: '/image/1',
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     path = "../static/images/img_" + response + ".png?rand=" + Math.random();
                     $("#graph").attr("src", path);
-                    if(response == numberOfSteps) {
+                    if (response == numberOfSteps) {
                         $('#next').prop('disabled', true);
                     }
                     $('#previous').prop('disabled', false);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -43,22 +43,22 @@ $(function() {
 
 
 
-$(function() {
+$(function () {
     $('#previous').on({
-        'click': function(){
+        'click': function () {
             $.ajax({
                 url: '/image/-1',
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     path = "../static/images/img_" + response + ".png?rand=" + Math.random();
                     $("#graph").attr("src", path);
-                    if(response == 1) {
+                    if (response == 1) {
                         $('#previous').prop('disabled', true);
                     }
                     $('#next').prop('disabled', false);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -66,31 +66,31 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#add_no_vertices').on({
-        'click': function() {
+$(function () {
+    $('#numberOfVerticesButton').on({
+        'click': function () {
             $.ajax({
-                url: '/vertices/' + $('#number_of_vertices').val(),
+                url: '/vertices/' + $('#numberOfVerticesInput').val(),
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     id = "neighbour_vertex_"
-                    for (var i = 0; i < parseInt($('#number_of_vertices').val()); i++) {
-                        $("#adjacency_list").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
+                    for (var i = 0; i < parseInt($('#numberOfVerticesInput').val()); i++) {
+                        $("#adjacencyListTable").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
                     }
-                    $('#no_vertices').text($('#number_of_vertices').val());
+                    $('#numberOfVerticesLabel').text($('#numberOfVerticesInput').val());
                     $('#beginning').attr('min', 0);
                     $('#end').attr('min', 0);
-                    $('#beginning').attr('max', parseInt($('#number_of_vertices').val())-1);
-                    $('#end').attr('max', parseInt($('#number_of_vertices').val())-1);
-                    $('#collapseTwo').collapse();
+                    $('#beginning').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
+                    $('#end').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
+                    $('#collapseThree').collapse('show');
                     $('#graphProperties').prop('hidden', false);
-                    
-                    setGraphType();
 
-                    setAlgorithm();
+                    //setGraphType();
+
+                    //setAlgorithm();
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -98,9 +98,9 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#add_edge').on({
-        'click': function() {
+$(function () {
+    $('#addEdgeButton').on({
+        'click': function () {
             data_test = {
                 beginning: $('#beginning').val(),
                 end: $('#end').val(),
@@ -111,12 +111,12 @@ $(function() {
                 url: '/edges/',
                 type: 'GET',
                 data: data_test,
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val() + "(" + $('#weight').val() + ")");
                     $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val() + "(" + $('#weight').val() + ")");
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -124,19 +124,19 @@ $(function() {
     });
 });
 
-$(function() {
+$(function () {
     $('#draw').on({
-        'click': function() {
+        'click': function () {
             $.ajax({
                 url: '/draw/',
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     path = "../static/images/img_1.png?rand=" + Math.random();
                     $("#graph").attr("src", path);
                     $('#next').prop('disabled', false);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -144,55 +144,119 @@ $(function() {
     });
 });
 
-$(function() {
-    $('input[type=radio][name=graphType]').change(function() {
-        setGraphType();
-    });
-});
-
-$(function() {
-    $('input[type=radio][name=algorithmType]').change(function() {
-        setAlgorithm();
-    });
-});
-
-$(function() {
+$(function () {
     $('#reset').on({
-        'click': function() {
-            $("#graphProperties").text("");
+        'click': function () {
             $.ajax({
-                url: '/reset'
+                url: '/reset',
+                type: 'DELETE',
+                success: function (response) {
+                    $("#graph").attr("src", "../static/images/img.png?rand=" + Math.random());
+                    $("#graphProperties").prop("hidden", true);
+                    $('#numberOfVerticesLabel').text("");
+                    $("#adjacencyListTable").text("");
+                },
+                error: function (error) {
+
+                }
             });
         }
     });
 });
 
+$(function () {
+    $('#addStartVertex').on({
+        'click': function () {
+            console.log($('#startVertex').val());
+            $.ajax({
+                url: '/startVertex',
+                type: 'GET',
+                data: {
+                    startVertex: $('#startVertex').val()
+                },
+                success: function (response) {
+                    $('#startVertexLabel').text($('#startVertex').val());
+                    $('#collapseSix').collapse('show');
+                },
+                error: function (error) {
+
+                }
+            });
+        }
+    });
+});
+
+$(function () {
+    $('#graphTypeButton').on({
+        'click': function () {
+            $.ajax({
+                url: '/graphType',
+                type: 'GET',
+                data: {
+                    graphType: $('input[type=radio][name=graphType]:checked').val()
+                },
+                success: function (response) {
+                    setGraphType();
+                    $('#collapseTwo').collapse('show');
+                },
+                error: function (error) {
+
+                }
+            });
+
+        }
+    });
+});
+
+
+$(function () {
+    $('#algorithmTypeButton').on({
+        'click': function () {
+            $.ajax({
+                url: '/algorithm',
+                type: 'GET',
+                data: {
+                    algorithm: $('input[type=radio][name=algorithmType]:checked').val()
+                },
+                success: function (response) {
+                    setAlgorithm();
+                    $('#collapseFive').collapse('show');
+                }
+            });
+            
+        }
+    });
+});
+
+
 function setGraphType() {
-    if($('input[type=radio][name=graphType]:checked').val() == 'simpleGraph') {
-        $("#graphTypeLabel").text("Graf prosty");
-    }
-    else if($('input[type=radio][name=graphType]:checked').val() == 'directedGraph') {
-        $("#graphTypeLabel").text("Digraf prosty");
-    }
+    $("#graphTypeLabel").text($('input[type=radio][name=graphType]:checked').val());
+    // if(graphType == 'simpleGraph') {
+    //     $("#graphTypeLabel").text("Graf prosty");
+    // }
+    // else if(graphType == 'directedGraph') {
+    //     $("#graphTypeLabel").text("Digraf prosty");
+    // }
 }
 
 function setAlgorithm() {
-    if($('input[type=radio][name=algorithmType]:checked').val() == 'bfs') {
-        $("#algorithmLabel").text("Przeszukiwanie wszerz (BFS)");
-    }
-    else if($('input[type=radio][name=algorithmType]:checked').val() == 'dfs') {
-        $("#algorithmLabel").text("Przeszukiwanie w głąb (DFS)");
-    }
-    else if($('input[type=radio][name=algorithmType]:checked').val() == 'kruskal') {
-        $("#algorithmLabel").text("Algorytm Kruskala");
-    }
-    else if($('input[type=radio][name=algorithmType]:checked').val() == 'dijkstra') {
-        $("#algorithmLabel").text("Algorytm Dijkstry");
-    }
-    else if($('input[type=radio][name=algorithmType]:checked').val() == 'prim') {
-        $("#algorithmLabel").text("Algorytm Prima");
-    }
-    else if($('input[type=radio][name=algorithmType]:checked').val() == 'bellmanFord') {
-        $("#algorithmLabel").text("Algorytm Bellmana-Forda");
-    }
+    $("#algorithmLabel").text($('input[type=radio][name=algorithmType]:checked').val());
+    // if(algorithmType == 'bfs') {
+    //     $("#algorithmLabel").text("Przeszukiwanie wszerz (BFS)");
+    // }
+    // else if(algorithmType == 'dfs') {
+    //     $("#algorithmLabel").text("Przeszukiwanie w głąb (DFS)");
+    // }
+    // else if(algorithmType == 'kruskal') {
+    //     $("#algorithmLabel").text("Algorytm Kruskala");
+    // }
+    // else if(algorithmType == 'dijkstra') {
+    //     $("#algorithmLabel").text("Algorytm Dijkstry");
+    // }
+    // else if(algorithmType == 'prim') {
+    //     $("#algorithmLabel").text("Algorytm Prima");
+    // }
+    // else if(algorithmType == 'bellmanFord') {
+    //     $("#algorithmLabel").text("Algorytm Bellmana-Forda");
+    // }
 }

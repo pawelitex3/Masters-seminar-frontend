@@ -38,24 +38,34 @@
                             <div class="accordion-item text-center">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true"
-                                        aria-controls="collapseOne">
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         Krok 1: wybierz typ grafu
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show"
                                     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="btn-group" role="group"
-                                            aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" name="graphType" id="simpleGraph"
-                                                autocomplete="off" value="simpleGraph" checked>
-                                            <label class="btn btn-outline-primary" for="simpleGraph">Graf prosty</label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="btn-group" role="group"
+                                                    aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check" name="graphType"
+                                                        id="simpleGraph" autocomplete="off" value="Graf prosty" checked>
+                                                    <label class="btn btn-outline-primary" for="simpleGraph">Graf
+                                                        prosty</label>
 
-                                            <input type="radio" class="btn-check" name="graphType" id="directedGraph"
-                                                autocomplete="off" value="directedGraph">
-                                            <label class="btn btn-outline-primary" for="directedGraph">Digraf prosty</label>
+                                                    <input type="radio" class="btn-check" name="graphType"
+                                                        id="directedGraph" autocomplete="off" value="Digraf prosty">
+                                                    <label class="btn btn-outline-primary" for="directedGraph">Digraf
+                                                        prosty</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <button id="graphTypeButton" class="btn btn-lg btn-primary btn-block"
+                                                    type="button">Zatwierdź</button>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -68,15 +78,16 @@
                                         Krok 2: ustal liczbę wierzchołków
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse"
-                                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <input id="number_of_vertices" type="number" class="form-control">
+                                                <input id="numberOfVerticesInput" type="number" class="form-control">
                                             </div>
                                             <div class="col">
-                                                <button id="add_no_vertices" class="btn btn-lg btn-primary btn-block"
+                                                <button id="numberOfVerticesButton"
+                                                    class="btn btn-lg btn-primary btn-block"
                                                     type="button">Zatwierdź</button>
                                             </div>
                                         </div>
@@ -87,14 +98,14 @@
                             <!-- Set edges -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
                                         aria-controls="collapseThree">
                                         Krok 3: wstaw krawędzie do grafu
                                     </button>
                                 </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                    data-bs-parent="#accordionExample">
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -127,7 +138,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button id="add_edge" class="btn btn-lg btn-primary btn-block">Dodaj
+                                                <button id="addEdgeButton"
+                                                    class="btn btn-lg btn-primary btn-block">Dodaj
                                                     krawędź</button>
                                             </div>
                                         </div>
@@ -144,40 +156,77 @@
                                         Krok 4: wybierz algorytm
                                     </button>
                                 </h2>
-                                <div id="collapseFour" class="accordion-collapse collapse"
-                                    aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                    data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="btn-group btn-group-vertical" role="group"
-                                            aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" name="algorithmType" id="bfs"
-                                                autocomplete="off" value="bfs" checked>
-                                            <label class="btn btn-outline-primary" for="bfs">Przeszukiwanie wszerz
-                                                (BFS)</label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="btn-group btn-group-vertical" role="group"
+                                                    aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check" name="algorithmType" id="bfs"
+                                                        autocomplete="off" value="Przeszukiwanie wszerz (BFS)" checked>
+                                                    <label class="btn btn-outline-primary" for="bfs">Przeszukiwanie
+                                                        wszerz
+                                                        (BFS)</label>
 
-                                            <input type="radio" class="btn-check" name="algorithmType" id="dfs"
-                                                autocomplete="off" value="dfs">
-                                            <label class="btn btn-outline-primary" for="dfs">Przeszukiwanie w głąb
-                                                (DFS)</label>
+                                                    <input type="radio" class="btn-check" name="algorithmType" id="dfs"
+                                                        autocomplete="off" value="Przeszukiwanie w głąb (DFS)">
+                                                    <label class="btn btn-outline-primary" for="dfs">Przeszukiwanie w
+                                                        głąb
+                                                        (DFS)</label>
 
-                                            <input type="radio" class="btn-check" name="algorithmType" id="dijkstra"
-                                                autocomplete="off" value="dijkstra">
-                                            <label class="btn btn-outline-primary" for="dijkstra">Algorytm
-                                                Dijkstry</label>
+                                                    <input type="radio" class="btn-check" name="algorithmType"
+                                                        id="dijkstra" autocomplete="off" value="Algorytm Dijkstry">
+                                                    <label class="btn btn-outline-primary" for="dijkstra">Algorytm
+                                                        Dijkstry</label>
 
-                                            <input type="radio" class="btn-check" name="algorithmType" id="bellmanFord"
-                                                autocomplete="off" value="bellmanFord">
-                                            <label class="btn btn-outline-primary" for="bellmanFord">Algorytm
-                                                Bellmana-Forda</label>
+                                                    <input type="radio" class="btn-check" name="algorithmType"
+                                                        id="bellmanFord" autocomplete="off" value="Algorytm Bellmana-Forda">
+                                                    <label class="btn btn-outline-primary" for="bellmanFord">Algorytm
+                                                        Bellmana-Forda</label>
 
-                                            <input type="radio" class="btn-check" name="algorithmType" id="kruskal"
-                                                autocomplete="off" value="kruskal">
-                                            <label class="btn btn-outline-primary" for="kruskal">Algorytm
-                                                Kruskala</label>
+                                                    <input type="radio" class="btn-check" name="algorithmType"
+                                                        id="kruskal" autocomplete="off" value="Algorytm Kruskala">
+                                                    <label class="btn btn-outline-primary" for="kruskal">Algorytm
+                                                        Kruskala</label>
 
-                                            <input type="radio" class="btn-check" name="algorithmType" id="prim"
-                                                autocomplete="off" value="prim">
-                                            <label class="btn btn-outline-primary" for="prim">Algorytm
-                                                Prima</label>
+                                                    <input type="radio" class="btn-check" name="algorithmType" id="prim"
+                                                        autocomplete="off" value="Algorytm Prima">
+                                                    <label class="btn btn-outline-primary" for="prim">Algorytm
+                                                        Prima</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <button id="algorithmTypeButton"
+                                                    class="btn btn-lg btn-primary btn-block">Zatwierdź</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Set start vertex -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFive" aria-expanded="false"
+                                        aria-controls="collapseFive">
+                                        Krok 5: wybierz wierzchołek startowy (Nie dotyczy algorytmu Kruskala)
+                                    </button>
+                                </h2>
+                                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input id="startVertex" type="number" class="form-control">
+                                            </div>
+                                            <div class="col">
+
+                                                <button id="addStartVertex" class="btn btn-lg btn-primary btn-block"
+                                                    type="button">Zatwierdź</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,18 +234,19 @@
 
                             <!-- Draw a graph or reset settings -->
                             <div class="accordion-item text-center">
-                                <h2 class="accordion-header" id="headingFive">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
-                                        aria-controls="collapseFive">
-                                        Krok 5: narysuj graf
+                                <h2 class="accordion-header" id="headingSix">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        Krok 6: symuluj działanie algorytmu
                                     </button>
                                 </h2>
-                                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <button id="draw" class="btn btn-lg btn-success btn-block">Rysuj symulację</button>
-                                        <button id="reset" class="btn btn-lg btn-danger btn-block">Resetuj ustawienia</button>
+                                        <button id="draw" class="btn btn-lg btn-success btn-block">Rysuj
+                                            symulację</button>
+                                        <button id="reset" class="btn btn-lg btn-danger btn-block">Resetuj
+                                            ustawienia</button>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +281,7 @@
                                 </h4>
                             </div>
                             <div class="col">
-                                <h4 id="no_vertices">
+                                <h4 id="numberOfVerticesLabel">
 
                                 </h4>
                             </div>
@@ -251,6 +301,20 @@
                             </div>
                         </div>
 
+                        <!-- Start vertex -->
+                        <div class="row mt-3">
+                            <div class="col-5">
+                                <h4>
+                                    Wierzchołek startowy
+                                </h4>
+                            </div>
+                            <div class="col">
+                                <h4 id="startVertexLabel">
+
+                                </h4>
+                            </div>
+                        </div>
+
                         <!-- Edges using adjacency list -->
                         <div class="row mt-3">
                             <div class="col">
@@ -261,7 +325,7 @@
                                             <th scope="col">Lista sąsiadów</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="adjacency_list">
+                                    <tbody id="adjacencyListTable">
                                     </tbody>
                                 </table>
                             </div>

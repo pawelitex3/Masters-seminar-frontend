@@ -9,6 +9,9 @@ image_number = 1
 number_of_vertices = 0
 adjacency_list = []
 weights = []
+start_vertex = 0
+algorithm = ''
+graphType = ''
 
 @app.route("/")
 def main():
@@ -34,15 +37,13 @@ def image(change):
 
 @app.route("/edges/", methods=['GET'])
 def add_edge():
-    print(request)
     beginning = int(request.args.get('beginning'))
     end = int(request.args.get('end'))
     weight = float(request.args.get('weight'))
     adjacency_list[beginning].append(end)
     adjacency_list[end].append(beginning)
-    adjacency_list[beginning].append(weight)
-    adjacency_list[end].append(weight)
-    print(adjacency_list)
+    weights[beginning].append(weight)
+    weights[end].append(weight)
     return jsonify(adjacency_list)
 
 
@@ -61,6 +62,7 @@ def draw_graph():
     plt.cla()
     return 'success'
 
+
 @app.route("/reset", methods=['DELETE'])
 def reset():
     global image_number, number_of_vertices, adjacency_list, weights
@@ -68,6 +70,29 @@ def reset():
     number_of_vertices = 0
     adjacency_list = []
     weights = []
+    return 'deleted'
+
+
+@app.route("/startVertex", methods=['GET'])
+def setStartVertex():
+    global start_vertex
+    start_vertex = int(request.args.get('startVertex'))
+    return 'success'
+
+
+@app.route("/algorithm", methods=['GET'])
+def setAlgorithm():
+    global algorithm
+    algorithm = request.args.get('algorithm')
+    return 'success'
+
+
+@app.route("/graphType", methods=['GET'])
+def setGraphType():
+    global graphType
+    graphType = request.args.get('graphType')
+    return 'success'
+
 
 if __name__ == "__main__":
     app.run(port=5010)
