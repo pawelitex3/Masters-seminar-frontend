@@ -1,5 +1,5 @@
 var numberOfSteps = 4
-
+var imageNumber = 1
 
 $(function () {
     $('#vertex').click(function () {
@@ -21,22 +21,29 @@ $(function () {
 $(function () {
     $('#next').on({
         'click': function () {
-            $.ajax({
-                url: '/image/1',
-                type: 'POST',
-                success: function (response) {
-                    console.log(response);
-                    path = "../static/images/img_" + response + ".png?rand=" + Math.random();
-                    $("#graph").attr("src", path);
-                    if (response == numberOfSteps) {
-                        $('#next').prop('disabled', true);
-                    }
-                    $('#previous').prop('disabled', false);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
+            imageNumber += 1;
+            path = "../static/images/img_" + imageNumber + ".png?rand=" + Math.random();
+            $("#graph").attr("src", path);
+            if (imageNumber == numberOfSteps) {
+                $('#next').prop('disabled', true);
+            }
+            $('#previous').prop('disabled', false);
+            // $.ajax({
+            //     url: '/image/1',
+            //     type: 'POST',
+            //     success: function (response) {
+            //         console.log(response);
+            //         path = "../static/images/img_" + response + ".png?rand=" + Math.random();
+            //         $("#graph").attr("src", path);
+            //         if (response == numberOfSteps) {
+            //             $('#next').prop('disabled', true);
+            //         }
+            //         $('#previous').prop('disabled', false);
+            //     },
+            //     error: function (error) {
+            //         console.log(error);
+            //     }
+            // });
         }
     });
 });
@@ -46,22 +53,29 @@ $(function () {
 $(function () {
     $('#previous').on({
         'click': function () {
-            $.ajax({
-                url: '/image/-1',
-                type: 'POST',
-                success: function (response) {
-                    console.log(response);
-                    path = "../static/images/img_" + response + ".png?rand=" + Math.random();
-                    $("#graph").attr("src", path);
-                    if (response == 1) {
-                        $('#previous').prop('disabled', true);
-                    }
-                    $('#next').prop('disabled', false);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
+            imageNumber -= 1;
+            path = "../static/images/img_" + imageNumber + ".png?rand=" + Math.random();
+            $("#graph").attr("src", path);
+            if (imageNumber == 1) {
+                $('#previous').prop('disabled', true);
+            }
+            $('#next').prop('disabled', false);
+            // $.ajax({
+            //     url: '/image/-1',
+            //     type: 'POST',
+            //     success: function (response) {
+            //         console.log(response);
+            //         path = "../static/images/img_" + response + ".png?rand=" + Math.random();
+            //         $("#graph").attr("src", path);
+            //         if (response == 1) {
+            //             $('#previous').prop('disabled', true);
+            //         }
+            //         $('#next').prop('disabled', false);
+            //     },
+            //     error: function (error) {
+            //         console.log(error);
+            //     }
+            // });
         }
     });
 });
@@ -135,6 +149,7 @@ $(function () {
                     path = "../static/images/img_1.png?rand=" + Math.random();
                     $("#graph").attr("src", path);
                     $('#next').prop('disabled', false);
+                    numberOfSteps = response;
                 },
                 error: function (error) {
                     console.log(error);
