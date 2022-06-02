@@ -50,7 +50,7 @@ def draw_graph():
 
     Graph = nx.Graph()
     Graph.add_edges_from(edges)
-    nx.draw(Graph, with_labels=True)
+    nx.draw(Graph, with_labels=True, node_size=800, font_color='#FFFFFF')
     plt.savefig("./static/images/img_1.png")
     plt.cla()
     return 'success'

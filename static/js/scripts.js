@@ -76,7 +76,10 @@ $(function() {
                         $("#adjacency_list").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
                     }
                     $('#no_vertices').text($('#number_of_vertices').val());
-                    
+                    $('#beginning').attr('min', 0);
+                    $('#end').attr('min', 0);
+                    $('#beginning').attr('max', parseInt($('#number_of_vertices').val())-1);
+                    $('#end').attr('max', parseInt($('#number_of_vertices').val())-1);
                 },
                 error: function(error) {
                     console.log(error);
@@ -121,6 +124,7 @@ $(function() {
                     console.log(response);
                     path = "../static/images/img_1.png?rand=" + Math.random();
                     $("#graph").attr("src", path);
+                    $('#next').prop('disabled', false);
                 },
                 error: function(error) {
                     console.log(error);
