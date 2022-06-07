@@ -1,4 +1,4 @@
-var numberOfSteps = 4
+var numberOfSteps = 1
 var imageNumber = 1
 
 $(function () {
@@ -56,7 +56,7 @@ $(function () {
             imageNumber -= 1;
             path = "../static/images/img_" + imageNumber + ".png?rand=" + Math.random();
             $("#graph").attr("src", path);
-            if (imageNumber == 1) {
+            if (imageNumber == 0) {
                 $('#previous').prop('disabled', true);
             }
             $('#next').prop('disabled', false);
@@ -146,7 +146,7 @@ $(function () {
                 type: 'GET',
                 success: function (response) {
                     console.log(response);
-                    path = "../static/images/img_1.png?rand=" + Math.random();
+                    path = "../static/images/img_0.png?rand=" + Math.random();
                     $("#graph").attr("src", path);
                     $('#next').prop('disabled', false);
                     numberOfSteps = response;

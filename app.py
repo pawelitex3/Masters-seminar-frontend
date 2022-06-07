@@ -7,8 +7,8 @@ import requests
 app = Flask(__name__)
 
 image_number = 1
-number_of_vertices = 6
-adjacency_list = [[2], [2, 3], [0, 1, 3, 4], [1, 2, 5], [2, 5], [3, 4]]
+number_of_vertices = 0
+adjacency_list = []
 weights = []
 start_vertex = 0
 algorithm = ''
@@ -64,10 +64,10 @@ def draw_graph():
 
     print(edges)
     Graph = nx.Graph()
-    Graph.add_nodes_from([i for i in range(6)])
+    Graph.add_nodes_from([i for i in range(number_of_vertices)])
     Graph.add_edges_from(edges)
 
-    node_colors = ['black' for _ in range(6)]
+    node_colors = ['black' for _ in range(number_of_vertices)]
     for u, v in Graph.edges():
         Graph[u][v]['color'] = 'black'
 
@@ -86,6 +86,9 @@ def draw_graph():
     for i in range(len(res.json())):
         json_response = res.json()[i]
         current_vertex = json_response['current_vertex']
+        start_current_edge, end_current_edge = json_response['current_edge']
+        red_edges = json_response['red_edges']
+        green_edges = json_response['green_edges']
         parents = json_response['parents']
         step_number = json_response['step_number']
         visited = json_response['visited']
@@ -96,24 +99,30 @@ def draw_graph():
             elif visited[j] == 2:
                 node_colors[j] = 'green'
             
-            if parents[j] != -1:
-                Graph[j][parents[j]]['color'] = 'green'
-                
+            # if parents[j] != -1:
+            #     Graph[j][parents[j]]['color'] = 'green'
+
+        for v, u in red_edges:
+            Graph[v][u]['color'] = 'red'
+
+        for v, u in green_edges:
+            Graph[v][u]['color'] = 'green'
 
         if node_colors[current_vertex] != 'green':
             node_colors[current_vertex] = 'red'
+
+        if start_current_edge != end_current_edge and step_number > 0 and step_number < len(res.json())-1:
+            Graph[end_current_edge][start_current_edge]['color'] = 'blue'
+
+
+
         edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
         nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors)
         plt.savefig(f"./static/images/img_{i+1}.png")
         plt.cla()
         print(res.json()[i])
+        
 
-    # Graph = nx.Graph()
-    # Graph.add_nodes_from([i for i in range(number_of_vertices)])
-    # Graph.add_edges_from(edges)
-    #nx.draw(Graph, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors)
-    #plt.savefig("./static/images/img_1.png")
-    #plt.cla()
     return str(len(res.json()))
 
 
@@ -149,6 +158,5 @@ def setGraphType():
 
 
 if __name__ == "__main__":
-    draw_graph()
     app.run(port=5010)
     
