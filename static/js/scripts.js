@@ -1,5 +1,5 @@
 var numberOfSteps = 1
-var imageNumber = 1
+var imageNumber = 0
 
 $(function () {
     $('#vertex').click(function () {
