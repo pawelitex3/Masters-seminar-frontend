@@ -14,6 +14,7 @@ weights = []
 start_vertex = 0
 algorithm = ''
 graph_type = ''
+edge_style = ''
 
 @app.route("/")
 def main():
@@ -21,7 +22,7 @@ def main():
 
 
 @app.route("/vertices/<no_vertices>", methods=['POST'])
-def previous(no_vertices):
+def set_number_of_vertices(no_vertices):
     global number_of_vertices
     number_of_vertices = int(no_vertices)
     for _ in range(number_of_vertices):
@@ -43,12 +44,14 @@ def add_edge():
     beginning = int(request.args.get('beginning'))
     end = int(request.args.get('end'))
     weight = float(request.args.get('weight'))
-    adjacency_list[beginning].append(end)
-    weights[beginning].append(weight)
+    
 
-    if graph_type == 'Graf prosty':
-        adjacency_list[end].append(beginning)
-        weights[end].append(weight)
+    if end not in adjacency_list[beginning]:
+        adjacency_list[beginning].append(end)
+        weights[beginning].append(weight)
+        if graph_type == 'Graf prosty':
+            adjacency_list[end].append(beginning)
+            weights[end].append(weight)
     return jsonify(adjacency_list)
 
 
@@ -94,7 +97,7 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
 
 
         edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
-        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors)
+        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors, connectionstyle=f'{edge_style}')
         plt.savefig(f"./static/images/img_{i+1}.png")
         plt.cla()
         #print(res.json()[i])
@@ -103,11 +106,19 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
 
 
 def draw_Kruskal(Graph, my_pos):
+    global graph_type
+
+    if graph_type == 'Graf prosty':
+        gtype = 'undirected'
+    elif graph_type == 'Digraf prosty':
+        gtype = 'directed'
+
     data_to_send = {
         'vertices': [i for i in range(number_of_vertices)],
         'adjacency_list': adjacency_list,
         'start_vertex': start_vertex,
-        'weights': weights
+        'weights': weights,
+        'graph_type': gtype
     }
 
     res = requests.post(f'http://127.0.0.1:5000/api/Kruskal', json=data_to_send)
@@ -133,19 +144,33 @@ def draw_Kruskal(Graph, my_pos):
         for u in green_vertices:
             node_colors[u] = 'green'
 
-        Graph[start_current_edge][end_current_edge]['color'] = 'red'
+        if start_current_edge != end_current_edge and step_number < len(res.json())-1:
+            if Graph[start_current_edge][end_current_edge]['color'] not in {'red', 'green'}:
+                Graph[start_current_edge][end_current_edge]['color'] = 'blue'
+        
 
         edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
-        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors)
+        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors, connectionstyle=f'{edge_style}')
         plt.savefig(f"./static/images/img_{i+1}.png")
         plt.cla()
+
+    if len(red_edges) + len(green_edges) < len(Graph.edges()):
+        for u, v in Graph.edges():
+            if Graph[u][v]['color'] == 'black':
+                Graph[u][v]['color'] = 'red'
+        
+        edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
+        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors, connectionstyle=f'{edge_style}')
+        plt.savefig(f"./static/images/img_{i+2}.png")
+        plt.cla()
+        return str(len(res.json())+1)
 
     return str(len(res.json()))
 
 
 @app.route("/draw/", methods=['GET'])
 def draw_graph():
-    global number_of_vertices, adjacency_list, algorithm, graph_type
+    global number_of_vertices, adjacency_list, algorithm, graph_type, edge_style
 
     edges = []
     for i in range(number_of_vertices):
@@ -154,8 +179,10 @@ def draw_graph():
 
     if graph_type == 'Graf prosty':
         Graph = nx.Graph()
+        edge_style = 'arc3,rad=0.'
     elif graph_type == 'Digraf prosty':
         Graph = nx.DiGraph()
+        edge_style = 'arc3,rad=0.1'
 
     Graph.add_nodes_from([i for i in range(number_of_vertices)])
     Graph.add_edges_from(edges)
@@ -165,7 +192,7 @@ def draw_graph():
         Graph[u][v]['color'] = 'black'
 
     my_pos = nx.spring_layout(Graph, seed=random.randrange(10, 1000))
-    nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color='black')
+    nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color='black', connectionstyle=f'{edge_style}')
     plt.savefig("./static/images/img_0.png")
     plt.cla()
 

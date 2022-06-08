@@ -139,6 +139,23 @@ $(function () {
 });
 
 $(function () {
+    $('#randEdgeButton').on({
+        'click': function () {
+            max = parseInt($('#numberOfVerticesInput').val());
+            beginning = randomInt(0, max);
+            end = randomInt(0, max);
+            while(beginning == end){
+                end = randomInt(0, max);
+            }
+            $('#beginning').val(beginning);
+            $('#end').val(end);
+        }
+    });
+});
+
+
+
+$(function () {
     $('#draw').on({
         'click': function () {
             $.ajax({
@@ -150,6 +167,9 @@ $(function () {
                     $("#graph").attr("src", path);
                     $('#next').prop('disabled', false);
                     numberOfSteps = response;
+                    imageNumber = 0;
+                    $('#previous').prop('disabled', true);
+                    $('#next').prop('disabled', false);
                 },
                 error: function (error) {
                     console.log(error);
@@ -218,7 +238,14 @@ $(function () {
 
                 }
             });
-
+            if ($('input[type=radio][name=graphType]:checked').val() == 'Digraf prosty') {
+                $('#kruskal').prop('disabled', true);
+                $('#prim').prop('disabled', true);
+            }
+            else {
+                $('#kruskal').prop('disabled', false);
+                $('#prim').prop('disabled', false);
+            }
         }
     });
 });
@@ -274,4 +301,10 @@ function setAlgorithm() {
     // else if(algorithmType == 'bellmanFord') {
     //     $("#algorithmLabel").text("Algorytm Bellmana-Forda");
     // }
+}
+
+function randomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }
