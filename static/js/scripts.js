@@ -131,7 +131,10 @@ $(function () {
                 success: function (response) {
                     console.log(response);
                     $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val() + "(" + $('#weight').val() + ")");
-                    $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val() + "(" + $('#weight').val() + ")");
+                    if($('input[type=radio][name=graphType]:checked').val() == 'Graf prosty'){
+                        $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val() + "(" + $('#weight').val() + ")");
+                    }
+                    
                 },
                 error: function (error) {
                     console.log(error);
