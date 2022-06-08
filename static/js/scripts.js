@@ -29,7 +29,8 @@ $(function () {
                 $('#next').prop('disabled', true);
             }
             $('#previous').prop('disabled', false);
-            $('#info').text(infoTable[imageNumber-1])
+            $('#info').text(infoTable[imageNumber-1]);
+            $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
             // $.ajax({
             //     url: '/image/1',
             //     type: 'POST',
@@ -62,7 +63,8 @@ $(function () {
                 $('#previous').prop('disabled', true);
             }
             $('#next').prop('disabled', false);
-            $('#info').text(infoTable[imageNumber-1])
+            $('#info').text(infoTable[imageNumber-1]);
+            $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
             // $.ajax({
             //     url: '/image/-1',
             //     type: 'POST',
@@ -180,7 +182,8 @@ $(function () {
                     imageNumber = 0;
                     $('#previous').prop('disabled', true);
                     $('#next').prop('disabled', false);
-                    $('#info').text('Graf początkowy')
+                    $('#info').text('Graf początkowy');
+                    $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
                 },
                 error: function (error) {
                     console.log(error);
@@ -201,6 +204,8 @@ $(function () {
                     $("#graphProperties").prop("hidden", true);
                     $('#numberOfVerticesLabel').text("");
                     $("#adjacencyListTable").text("");
+                    $('#counter').text('');
+                    $('#info').text('');
                 },
                 error: function (error) {
 
