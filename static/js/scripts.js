@@ -1,5 +1,6 @@
 var numberOfSteps = 1
 var imageNumber = 0
+var infoTable = []
 
 $(function () {
     $('#vertex').click(function () {
@@ -28,6 +29,7 @@ $(function () {
                 $('#next').prop('disabled', true);
             }
             $('#previous').prop('disabled', false);
+            $('#info').text(infoTable[imageNumber-1])
             // $.ajax({
             //     url: '/image/1',
             //     type: 'POST',
@@ -60,6 +62,7 @@ $(function () {
                 $('#previous').prop('disabled', true);
             }
             $('#next').prop('disabled', false);
+            $('#info').text(infoTable[imageNumber-1])
             // $.ajax({
             //     url: '/image/-1',
             //     type: 'POST',
@@ -144,11 +147,13 @@ $(function () {
             max = parseInt($('#numberOfVerticesInput').val());
             beginning = randomInt(0, max);
             end = randomInt(0, max);
+            weight = randomInt(0, 30);
             while(beginning == end){
                 end = randomInt(0, max);
             }
             $('#beginning').val(beginning);
             $('#end').val(end);
+            $('#weight').val(weight);
         }
     });
 });
@@ -161,15 +166,18 @@ $(function () {
             $.ajax({
                 url: '/draw/',
                 type: 'GET',
+                dataType: 'json',
                 success: function (response) {
                     console.log(response);
+                    infoTable = response
                     path = "../static/images/img_0.png?rand=" + Math.random();
                     $("#graph").attr("src", path);
                     $('#next').prop('disabled', false);
-                    numberOfSteps = response;
+                    numberOfSteps = response.length;
                     imageNumber = 0;
                     $('#previous').prop('disabled', true);
                     $('#next').prop('disabled', false);
+                    $('#info').text('Graf początkowy')
                 },
                 error: function (error) {
                     console.log(error);

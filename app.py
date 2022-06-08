@@ -1,3 +1,4 @@
+from cmath import inf
 from flask import Flask, render_template, request, jsonify
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -62,11 +63,13 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
         'start_vertex': start_vertex
     }
 
+    info_table = []
     res = requests.post(f'http://127.0.0.1:5000/api/{algorithm}', json=data_to_send)
 
     node_colors = ['black' for _ in range(number_of_vertices)]
 
     for i in range(len(res.json())):
+        
         json_response = res.json()[i]
         current_vertex = json_response['current_vertex']
         start_current_edge, end_current_edge = json_response['current_edge']
@@ -75,6 +78,9 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
         parents = json_response['parents']
         step_number = json_response['step_number']
         visited = json_response['visited']
+        info = json_response['info']
+
+        info_table.append(info)
         
         for j in range(number_of_vertices):
             if visited[j] == 1:
@@ -102,26 +108,21 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
         plt.cla()
         #print(res.json()[i])
     
-    return str(len(res.json()))
+    return jsonify(info_table)
 
 
-def draw_Kruskal(Graph, my_pos):
-    global graph_type
+def drawMST(Graph, my_pos, algorithm):
 
-    if graph_type == 'Graf prosty':
-        gtype = 'undirected'
-    elif graph_type == 'Digraf prosty':
-        gtype = 'directed'
+    info_table = []
 
     data_to_send = {
         'vertices': [i for i in range(number_of_vertices)],
         'adjacency_list': adjacency_list,
         'start_vertex': start_vertex,
-        'weights': weights,
-        'graph_type': gtype
+        'weights': weights
     }
 
-    res = requests.post(f'http://127.0.0.1:5000/api/Kruskal', json=data_to_send)
+    res = requests.post(f'http://127.0.0.1:5000/api/{algorithm}', json=data_to_send)
 
     node_colors = ['black' for _ in range(number_of_vertices)]
 
@@ -134,6 +135,9 @@ def draw_Kruskal(Graph, my_pos):
         step_number = json_response['step_number']
         #visited = json_response['visited']
         green_vertices = json_response['green_vertices']
+        info = json_response['info']
+
+        info_table.append(info)
 
         for v, u in red_edges:
             Graph[v][u]['color'] = 'red'
@@ -163,9 +167,23 @@ def draw_Kruskal(Graph, my_pos):
         nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors, connectionstyle=f'{edge_style}')
         plt.savefig(f"./static/images/img_{i+2}.png")
         plt.cla()
-        return str(len(res.json())+1)
+        info_table.append('Wynik działania algorytmu. Dodanie dowolnej z pozostałych krawędzi spowoduje powstanie cyklu.')
+        #return str(len(res.json())+1)
 
-    return str(len(res.json()))
+    return jsonify(info_table) 
+
+
+def draw_Dijkstra():
+    info_table = []
+
+    data_to_send = {
+        'vertices': [i for i in range(number_of_vertices)],
+        'adjacency_list': adjacency_list,
+        'start_vertex': start_vertex,
+        'weights': weights
+    }
+
+    res = requests.post(f'http://127.0.0.1:5000/api/Dijkstra', json=data_to_send)
 
 
 @app.route("/draw/", methods=['GET'])
@@ -205,9 +223,9 @@ def draw_graph():
     elif algorithm == 'Algorytm Bellmana-Forda':
         pass
     elif algorithm == 'Algorytm Kruskala':
-        return draw_Kruskal(Graph, my_pos)
+        return drawMST(Graph, my_pos, 'Kruskal')
     elif algorithm == 'Algorytm Prima':
-        pass
+        return drawMST(Graph, my_pos, 'PrimDijkstra')
 
     #return str(len(res.json()))
 
