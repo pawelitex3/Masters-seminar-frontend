@@ -184,6 +184,7 @@ $(function () {
                     $('#next').prop('disabled', false);
                     $('#info').text('Graf początkowy');
                     $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
+                    showLegend();
                 },
                 error: function (error) {
                     console.log(error);
@@ -206,6 +207,7 @@ $(function () {
                     $("#adjacencyListTable").text("");
                     $('#counter').text('');
                     $('#info').text('');
+                    hideLegends();
                 },
                 error: function (error) {
 
@@ -323,4 +325,36 @@ function randomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function hideLegends() {
+    $('#searchLegend').prop('hidden', true);
+    $('#primLegend').prop('hidden', true);
+    $('#kruskalLegend').prop('hidden', true);
+    $('#dijkstraLegend').prop('hidden', true);
+    $('#bellmanFordLegend').prop('hidden', true);
+}
+
+function showLegend() {
+    hideLegends();
+    algorithm = $('input[type=radio][name=algorithmType]:checked').val()
+    if(algorithm == 'Przeszukiwanie wszerz (BFS)'){
+        $('#searchLegend').prop('hidden', false);
+    }
+    else if(algorithm == 'Przeszukiwanie w głąb (DFS)'){
+        $('#searchLegend').prop('hidden', false);
+    }
+    else if(algorithm == 'Algorytm Dijkstry'){
+        $('#dijkstraLegend').prop('hidden', false);
+    }
+    else if(algorithm == 'Algorytm Bellmana-Forda'){
+        $('#bellmanFordLegend').prop('hidden', false);
+    }
+    else if(algorithm == 'Algorytm Kruskala'){
+        $('#kruskalLegend').prop('hidden', false);
+    }
+    else if(algorithm == 'Algorytm Prima'){
+        $('#primLegend').prop('hidden', false);
+    }
+        
 }
