@@ -95,7 +95,7 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
             Graph[v][u]['color'] = 'green'
 
         if node_colors[current_vertex] != 'green':
-            node_colors[current_vertex] = 'red'
+            node_colors[current_vertex] = '#1261A0'
 
         if start_current_edge != end_current_edge and step_number > 0 and step_number < len(res.json())-1:
             Graph[start_current_edge][end_current_edge]['color'] = 'blue'
@@ -184,7 +184,7 @@ def draw_Dijkstra(Graph, my_pos):
     }
 
     res = requests.post(f'http://127.0.0.1:5000/api/Dijkstra', json=data_to_send)
-    node_colors = ['black' for _ in range(6)]#number_of_vertices)]
+    node_colors = ['black' for _ in range(number_of_vertices)]
     print(res.json())
     for i in range(len(res.json())):
         for u, v in Graph.edges():
@@ -228,8 +228,51 @@ def draw_Dijkstra(Graph, my_pos):
         plt.cla()
 
     return jsonify(info_table) 
-    return 'success'
 
+def draw_Bellman_Ford(Graph, my_pos):
+    info_table = []
+
+    data_to_send = {
+        'vertices': [i for i in range(number_of_vertices)],#number_of_vertices)],
+        'adjacency_list': adjacency_list, #[[1, 2], [3], [4], [2, 4], [5], [2]], #adjacency_list,
+        'start_vertex': start_vertex,
+        'weights': weights #[[2, 10], [3], [5], [1, 15], [9], [7]] #weights
+    }
+
+    res = requests.post(f'http://127.0.0.1:5000/api/BellmanFord', json=data_to_send)
+    
+
+    for i in range(len(res.json())):
+        for u, v in Graph.edges():
+            Graph[u][v]['color'] = 'black'
+        json_response = res.json()[i]
+        node_colors = ['black' for _ in range(number_of_vertices)]
+        green_edges = json_response['green_edges']
+        #step_number = json_response['step_number']
+        info = json_response['info']
+        green_vertex = json_response['current_vertex']
+        start_current_edge, end_current_edge = json_response['current_edge']
+        info_table.append(info)
+
+        # for v, u in red_edges:
+        #     Graph[v][u]['color'] = 'red'
+
+        for v, u in green_edges:
+            Graph[v][u]['color'] = 'green'
+
+        node_colors[green_vertex] = 'green'
+        if start_current_edge != end_current_edge:
+            Graph[start_current_edge][end_current_edge]['color'] = 'blue'
+
+
+        edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
+        nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF', node_color=node_colors, edge_color=edge_colors, connectionstyle=f'{edge_style}')
+        plt.savefig(f"./static/images/img_{i+1}.png")
+        plt.cla()
+
+    return jsonify(info_table)
+    return 'success'
+    
 
 @app.route("/draw/", methods=['GET'])
 def draw_graph():
@@ -268,7 +311,7 @@ def draw_graph():
     elif algorithm == 'Algorytm Dijkstry':
         return draw_Dijkstra(Graph, my_pos)
     elif algorithm == 'Algorytm Bellmana-Forda':
-        pass
+        return draw_Bellman_Ford(Graph, my_pos)
     elif algorithm == 'Algorytm Kruskala':
         return drawMST(Graph, my_pos, 'Kruskal')
     elif algorithm == 'Algorytm Prima':
