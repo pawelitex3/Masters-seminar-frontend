@@ -292,7 +292,7 @@ def draw_graph():
         Graph = nx.DiGraph()
         edge_style = 'arc3,rad=0.1'
 
-    Graph.add_nodes_from([i for i in range(6)])#number_of_vertices)])
+    Graph.add_nodes_from([i for i in range(number_of_vertices)])
     Graph.add_edges_from(edges)
 
     #node_colors = ['black' for _ in range(number_of_vertices)]

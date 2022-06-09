@@ -363,222 +363,104 @@
                     </div>
 
                 </div>
-                <div id="info" class="row mt-4 text-center">
+                <div class="row mt-4">
+                    <div class="col-3">
+                        <h6>
+                            Aktualny stan:
+                        </h6>
+                    </div>
+                    <div class="col">
+                        <h6 id="info">
 
+                        </h6>
+                    </div>
                 </div>
-                <div id="searchLegend" class="row" hidden>
+                <div id="searchLegend" class="row mt-2">
                     <div class="col">
                         <div class="row">
                             <div class="col text-center">
                                 <h3>Wierzchołki</h3>
                             </div>
-                            <div class="col text-center">
-                                <h3>Krawędzie</h3>
-                            </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
+                            <div class="col-2 rounded-circle" style="height: 25px; width: 25px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col" >
                                 wierzchołek nieprzetworzony
                             </div>
-                            <div class="col-1" style="height: 5px; background-color: black;">
 
-                            </div>
-                            <div class="col-5" >
-                                krawędź nieprzetworzona
-                            </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: green;">
 
                             </div>
-                            <div class="col-5">
+                            <div class="col">
                                 wierzchołek przetworzony
                             </div>
-                            <div class="col-1" style="height: 5px; background-color: green;">
 
-                            </div>
-                            <div class="col-5" >
-                                krawędź przetworzona i dodana do drzewa wynikowego
-                            </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: #1261A0;">
 
                             </div>
-                            <div class="col-5">
+                            <div class="col">
                                 aktualnie przetwarzany wierzchołek
                             </div>
-                            <div class="col-1" style="height: 5px; background-color: red;">
 
-                            </div>
-                            <div class="col-5" >
-                                krawędź przetworzona i niedodana do drzewa wynikowego
-                            </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: blue;">
 
                             </div>
-                            <div class="col-5">
+                            <div class="col">
                                 wierzchołek dodany do kolejki - oczekujący na przetworzenie
                             </div>
-                            <div class="col-1" style="height: 5px; background-color: blue;">
 
-                            </div>
-                            <div class="col-5" >
-                                aktualnie przetwarzana krawędź
-                            </div>
                         </div>
                     </div>
-                    
-                    
-                </div>
-                <div id="kruskalLegend" class="row" hidden>
                     <div class="col">
                         <div class="row">
                             <div class="col text-center">
-                                <h3>Wierzchołki</h3>
-                            </div>
-                            <div class="col text-center">
                                 <h3>Krawędzie</h3>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
-
-                            </div>
-                            <div class="col-5" >
-                                wierzchołek nieprzetworzony
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: black;">
-
-                            </div>
-                            <div class="col-5" >
-                                krawędź nieprzetworzona
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
-
-                            </div>
-                            <div class="col-5">
-                                wierzchołek przetworzony
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: green;">
-
-                            </div>
-                            <div class="col-5" >
-                                krawędź przetworzona i dodana do drzewa wynikowego
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
-
-                            </div>
-                            <div class="col-5">
-                                aktualnie przetwarzany wierzchołek
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: red;">
-
-                            </div>
-                            <div class="col-5" >
-                                krawędź przetworzona i niedodana do drzewa wynikowego
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
-
-                            </div>
-                            <div class="col-5">
-                                wierzchołek dodany do kolejki - oczekujący na przetworzenie
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: blue;">
-
-                            </div>
-                            <div class="col-5" >
-                                aktualnie przetwarzana krawędź
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-
-                <div id="primLegend" class="row" hidden>
-                    <div class="col">
                         <div class="row">
-                            <div class="col text-center">
-                                <h3>Wierzchołki</h3>
-                            </div>
-                            <div class="col text-center">
-                                <h3>Krawędzie</h3>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
+                            <div class="col-2 mt-2" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
-                                wierzchołek nieprzetworzony
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: black;">
-
-                            </div>
-                            <div class="col-5" >
+                            <div class="col" >
                                 krawędź nieprzetworzona
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                        <div class="row">
+                            <div class="col-2 mt-2" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col-5">
-                                wierzchołek przetworzony
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: green;">
-
-                            </div>
-                            <div class="col-5" >
+                            <div class="col" >
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                        <div class="row">
+                            <div class="col-2 mt-2" style="height: 5px; background-color: red;">
 
                             </div>
-                            <div class="col-5">
-                                aktualnie przetwarzany wierzchołek
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: red;">
-
-                            </div>
-                            <div class="col-5" >
+                            <div class="col">
                                 krawędź przetworzona i niedodana do drzewa wynikowego
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                        <div class="row">
+                            <div class="col-2 mt-2" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col-5">
-                                wierzchołek dodany do kolejki - oczekujący na przetworzenie
-                            </div>
-                            <div class="col-1" style="height: 5px; background-color: blue;">
-
-                            </div>
-                            <div class="col-5" >
+                            <div class="col" >
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
                     
-                    
                 </div>
-
-                <div id="dijkstraLegend" class="row" hidden>
+                <div id="kruskalLegend" class="row mt-2" hidden>
                     <div class="col">
                         <div class="row">
                             <div class="col text-center">
@@ -649,7 +531,149 @@
                     
                 </div>
 
-                <div id="bellmanFordLegend" class="row" hidden>
+                <div id="primLegend" class="row mt-2" hidden>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col text-center">
+                                <h3>Wierzchołki</h3>
+                            </div>
+                            <div class="col text-center">
+                                <h3>Krawędzie</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
+
+                            </div>
+                            <div class="col-5" >
+                                wierzchołek nieprzetworzony
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: black;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź nieprzetworzona
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+
+                            </div>
+                            <div class="col-5">
+                                wierzchołek przetworzony
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: green;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź przetworzona i dodana do drzewa wynikowego
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+
+                            </div>
+                            <div class="col-5">
+                                aktualnie przetwarzany wierzchołek
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: red;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź przetworzona i niedodana do drzewa wynikowego
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+
+                            </div>
+                            <div class="col-5">
+                                wierzchołek dodany do kolejki - oczekujący na przetworzenie
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: blue;">
+
+                            </div>
+                            <div class="col-5" >
+                                aktualnie przetwarzana krawędź
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <div id="dijkstraLegend" class="row mt-2" hidden>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col text-center">
+                                <h3>Wierzchołki</h3>
+                            </div>
+                            <div class="col text-center">
+                                <h3>Krawędzie</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
+
+                            </div>
+                            <div class="col-5" >
+                                wierzchołek nieprzetworzony
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: black;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź nieprzetworzona
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+
+                            </div>
+                            <div class="col-5">
+                                wierzchołek przetworzony
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: green;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź przetworzona i dodana do drzewa wynikowego
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+
+                            </div>
+                            <div class="col-5">
+                                aktualnie przetwarzany wierzchołek
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: red;">
+
+                            </div>
+                            <div class="col-5" >
+                                krawędź przetworzona i niedodana do drzewa wynikowego
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+
+                            </div>
+                            <div class="col-5">
+                                wierzchołek dodany do kolejki - oczekujący na przetworzenie
+                            </div>
+                            <div class="col-1" style="height: 5px; background-color: blue;">
+
+                            </div>
+                            <div class="col-5" >
+                                aktualnie przetwarzana krawędź
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <div id="bellmanFordLegend" class="row mt-2" hidden>
                     <div class="col">
                         <div class="row">
                             <div class="col text-center">
