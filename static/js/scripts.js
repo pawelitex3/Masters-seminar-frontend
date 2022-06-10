@@ -168,6 +168,7 @@ $(function () {
 $(function () {
     $('#draw').on({
         'click': function () {
+            $('#loadingSpinner').prop('hidden', false);
             $.ajax({
                 url: '/draw/',
                 type: 'GET',
@@ -183,8 +184,10 @@ $(function () {
                     $('#previous').prop('disabled', true);
                     $('#next').prop('disabled', false);
                     $('#info').text('Graf początkowy');
+                    $('#infoLabel').prop('hidden', false);
                     $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
                     showLegend();
+                    $('#loadingSpinner').prop('hidden', true);
                 },
                 error: function (error) {
                     console.log(error);
@@ -207,6 +210,7 @@ $(function () {
                     $("#adjacencyListTable").text("");
                     $('#counter').text('');
                     $('#info').text('');
+                    $('#infoLabel').prop('hidden', true);
                     hideLegends();
                 },
                 error: function (error) {

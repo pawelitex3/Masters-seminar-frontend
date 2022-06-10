@@ -247,10 +247,24 @@
                                 <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <button id="draw" class="btn btn-lg btn-success btn-block">Rysuj
-                                            symulację</button>
-                                        <button id="reset" class="btn btn-lg btn-danger btn-block">Resetuj
-                                            ustawienia</button>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button id="draw" class="btn btn-lg btn-success btn-block">Rysuj
+                                                    symulację</button>
+                                            </div>
+                                            <div class="col-1">
+                                                <div class="spinner-border" role="status" style="width: 30px;" id="loadingSpinner" hidden>
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <button id="reset" class="btn btn-lg btn-danger btn-block">Resetuj
+                                                    ustawienia</button>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -364,7 +378,7 @@
 
                 </div>
                 <div class="row mt-4">
-                    <div class="col-3">
+                    <div id="infoLabel" class="col-3" hidden>
                         <h6>
                             Aktualny stan:
                         </h6>
@@ -375,7 +389,7 @@
                         </h6>
                     </div>
                 </div>
-                <div id="searchLegend" class="row mt-2">
+                <div id="searchLegend" class="row mt-2" hidden>
                     <div class="col">
                         <div class="row">
                             <div class="col text-center">
