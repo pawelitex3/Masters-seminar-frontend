@@ -36,14 +36,15 @@
 
                             <!-- Set type of graph -->
                             <div class="accordion-item text-center">
-                                <h2 class="accordion-header" id="headingOne">
+                                <h2 class="accordion-header" id="setTypeOfGraphHeading">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        data-bs-target="#setTypeOfGraphCollapse" aria-expanded="true"
+                                        aria-controls="setTypeOfGraphCollapse">
                                         Krok 1: wybierz typ grafu
                                     </button>
                                 </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div id="setTypeOfGraphCollapse" class="accordion-collapse collapse show"
+                                    aria-labelledby="setTypeOfGraphHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col">
@@ -72,14 +73,15 @@
 
                             <!-- Set number of vertices -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
+                                <h2 class="accordion-header" id="setNumberOfVerticesHeading">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        data-bs-target="#setNumberOfVerticesCollapse" aria-expanded="false"
+                                        aria-controls="setNumberOfVerticesCollapse">
                                         Krok 2: ustal liczbę wierzchołków
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
+                                <div id="setNumberOfVerticesCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="setNumberOfVerticesHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -97,54 +99,108 @@
 
                             <!-- Set edges -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
+                                <h2 class="accordion-header" id="setEdgesHeading">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
+                                        data-bs-target="#setEdgesCollapse" aria-expanded="false"
+                                        aria-controls="setEdgesCollapse">
                                         Krok 3: wstaw krawędzie do grafu
                                     </button>
                                 </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div id="setEdgesCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="setEdgesHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                Początek krawędzi:
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <button id="setEdgesManuallyButton"
+                                                    class="btn btn-lg btn-primary btn-block">Wprowadź ręcznie</button>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col">
+                                                <button id="setClassOfGraphButton"
+                                                    class="btn btn-lg btn-primary btn-block">Wybierz klasę
+                                                    grafu</button>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="setEdgesManually" hidden>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        Początek krawędzi:
+                                                    </div>
+                                                    <div class="col-2">
 
-                                            </div>
-                                            <div class="col-4">
-                                                <input id="beginning" type="number" class="form-control">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input id="beginning" type="number" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col-6">
+                                                        Koniec krawędzi:
+                                                    </div>
+                                                    <div class="col-2"></div>
+                                                    <div class="col-4">
+                                                        <input id="end" type="number" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col-6">
+                                                        Waga:
+                                                    </div>
+                                                    <div class="col-2"></div>
+                                                    <div class="col-4">
+                                                        <input id="weight" type="number" class="form-control" value="1">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col">
+                                                        <button id="addEdgeButton"
+                                                            class="btn btn-lg btn-primary btn-block">Dodaj
+                                                            krawędź</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button id="randEdgeButton"
+                                                            class="btn btn-lg btn-primary btn-block">Losuj
+                                                            krawędź</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                Koniec krawędzi:
-                                            </div>
-                                            <div class="col-2"></div>
-                                            <div class="col-4">
-                                                <input id="end" type="number" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                Waga:
-                                            </div>
-                                            <div class="col-2"></div>
-                                            <div class="col-4">
-                                                <input id="weight" type="number" class="form-control" value="1">
-                                            </div>
-                                        </div>
-                                        <div class="row">
+                                        <div class="row" id="setClassOfGraph" hidden>
                                             <div class="col">
-                                                <button id="addEdgeButton"
-                                                    class="btn btn-lg btn-primary btn-block">Dodaj
-                                                    krawędź</button>
-                                            </div>
-                                            <div class="col">
-                                                <button id="randEdgeButton"
-                                                    class="btn btn-lg btn-primary btn-block">Losuj krawędź</button>
+                                                <div class="row mt-4 text-center">
+                                                    <div class="col">
+                                                        <div class="btn-group" role="group"
+                                                            aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" name="classOfGraph"
+                                                                id="random" autocomplete="off"
+                                                                value="Graf losowy" checked>
+                                                            <label class="btn btn-outline-primary" for="random">Graf
+                                                                losowy</label>
+                                                            <input type="radio" class="btn-check" name="classOfGraph"
+                                                                id="complete" autocomplete="off"
+                                                                value="Graf pełny">
+                                                            <label class="btn btn-outline-primary" for="complete">Graf
+                                                                pełny</label>
+                                                            <input type="radio" class="btn-check" name="classOfGraph"
+                                                                id="pathGraph" autocomplete="off"
+                                                                value="Ścieżka (path graph)">
+                                                            <label class="btn btn-outline-primary"
+                                                                for="pathGraph">Ścieżka (path graph)</label>
+                                                            <input type="radio" class="btn-check" name="classOfGraph"
+                                                                id="Graf 3-regularny" autocomplete="off"
+                                                                value="3regular">
+                                                            <label class="btn btn-outline-primary" for="3regular">Graf
+                                                                3-regularny</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-4 text-center">
+                                                    <div class="col">
+                                                        <button id="confirmClassOfGraphButton"
+                                                            class="btn btn-lg btn-primary btn-block"
+                                                            type="button">Zatwierdź</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -153,15 +209,15 @@
 
                             <!-- Select an algorithm for visualization -->
                             <div class="accordion-item text-center">
-                                <h2 class="accordion-header" id="headingFour">
+                                <h2 class="accordion-header" id="setAlgorithmHeading">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseFour" aria-expanded="false"
-                                        aria-controls="collapseFour">
+                                        data-bs-target="#setAlgorithmCollapse" aria-expanded="false"
+                                        aria-controls="setAlgorithmCollapse">
                                         Krok 4: wybierz algorytm
                                     </button>
                                 </h2>
-                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                                    data-bs-parent="#accordionExample">
+                                <div id="setAlgorithmCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="setAlgorithmHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col">
@@ -185,7 +241,8 @@
                                                         Dijkstry</label>
 
                                                     <input type="radio" class="btn-check" name="algorithmType"
-                                                        id="bellmanFord" autocomplete="off" value="Algorytm Bellmana-Forda">
+                                                        id="bellmanFord" autocomplete="off"
+                                                        value="Algorytm Bellmana-Forda">
                                                     <label class="btn btn-outline-primary" for="bellmanFord">Algorytm
                                                         Bellmana-Forda</label>
 
@@ -212,15 +269,15 @@
 
                             <!-- Set start vertex -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingFive">
+                                <h2 class="accordion-header" id="startVertexHeading">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseFive" aria-expanded="false"
-                                        aria-controls="collapseFive">
+                                        data-bs-target="#startVertexCollapse" aria-expanded="false"
+                                        aria-controls="startVertexCollapse">
                                         Krok 5: wybierz wierzchołek startowy (Nie dotyczy algorytmu Kruskala)
                                     </button>
                                 </h2>
-                                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                                    data-bs-parent="#accordionExample">
+                                <div id="startVertexCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="startVertexHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -238,14 +295,15 @@
 
                             <!-- Draw a graph or reset settings -->
                             <div class="accordion-item text-center">
-                                <h2 class="accordion-header" id="headingSix">
+                                <h2 class="accordion-header" id="drawGraphHeading">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        data-bs-target="#drawGraphCollapse" aria-expanded="false"
+                                        aria-controls="drawGraphCollapse">
                                         Krok 6: symuluj działanie algorytmu
                                     </button>
                                 </h2>
-                                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
-                                    data-bs-parent="#accordionExample">
+                                <div id="drawGraphCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="drawGraphHeading" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col">
@@ -253,7 +311,8 @@
                                                     symulację</button>
                                             </div>
                                             <div class="col-1">
-                                                <div class="spinner-border" role="status" style="width: 30px;" id="loadingSpinner" hidden>
+                                                <div class="spinner-border" role="status" style="width: 30px;"
+                                                    id="loadingSpinner" hidden>
                                                     <span class="sr-only"></span>
                                                 </div>
                                             </div>
@@ -262,9 +321,9 @@
                                                     ustawienia</button>
                                             </div>
                                         </div>
-                                        
-                                        
-                                        
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -333,8 +392,22 @@
                             </div>
                         </div>
 
+                        <!-- Class of garph -->
+                        <div class="row mt-3" id="classOfGraphRow" hidden>
+                            <div class="col-5">
+                                <h4>
+                                    Klasa grafu:
+                                </h4>
+                            </div>
+                            <div class="col">
+                                <h4 id="classOfGraphLabel">
+
+                                </h4>
+                            </div>
+                        </div>
+
                         <!-- Edges using adjacency list -->
-                        <div class="row mt-3">
+                        <div class="row mt-3" id="adjacencyListTableRow" hidden>
                             <div class="col">
                                 <table class="table">
                                     <thead>
@@ -397,16 +470,18 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-2 rounded-circle" style="height: 25px; width: 25px; background-color: black;">
+                            <div class="col-2 rounded-circle"
+                                style="height: 25px; width: 25px; background-color: black;">
 
                             </div>
-                            <div class="col" >
+                            <div class="col">
                                 wierzchołek nieprzetworzony
                             </div>
 
                         </div>
                         <div class="row mt-2">
-                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: green;">
+                            <div class="col-2 rounded-circle"
+                                style="height: 25px; width: 25px; background-color: green;">
 
                             </div>
                             <div class="col">
@@ -415,7 +490,8 @@
 
                         </div>
                         <div class="row mt-2">
-                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: #1261A0;">
+                            <div class="col-2 rounded-circle"
+                                style="height: 25px; width: 25px; background-color: #1261A0;">
 
                             </div>
                             <div class="col">
@@ -424,7 +500,8 @@
 
                         </div>
                         <div class="row mt-2">
-                            <div class="col-2 rounded-circle"  style="height: 25px; width: 25px; background-color: blue;">
+                            <div class="col-2 rounded-circle"
+                                style="height: 25px; width: 25px; background-color: blue;">
 
                             </div>
                             <div class="col">
@@ -443,7 +520,7 @@
                             <div class="col-2 mt-2" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col" >
+                            <div class="col">
                                 krawędź nieprzetworzona
                             </div>
                         </div>
@@ -451,7 +528,7 @@
                             <div class="col-2 mt-2" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col" >
+                            <div class="col">
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
@@ -467,12 +544,12 @@
                             <div class="col-2 mt-2" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col" >
+                            <div class="col">
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div id="kruskalLegend" class="row mt-2" hidden>
                     <div class="col">
@@ -488,18 +565,18 @@
                             <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 wierzchołek nieprzetworzony
                             </div>
                             <div class="col-1" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź nieprzetworzona
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: green;">
 
                             </div>
                             <div class="col-5">
@@ -508,12 +585,12 @@
                             <div class="col-1" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: #1261A0;">
 
                             </div>
                             <div class="col-5">
@@ -522,12 +599,12 @@
                             <div class="col-1" style="height: 5px; background-color: red;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i niedodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: blue;">
 
                             </div>
                             <div class="col-5">
@@ -536,13 +613,13 @@
                             <div class="col-1" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
 
                 <div id="primLegend" class="row mt-2" hidden>
@@ -559,18 +636,18 @@
                             <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 wierzchołek nieprzetworzony
                             </div>
                             <div class="col-1" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź nieprzetworzona
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: green;">
 
                             </div>
                             <div class="col-5">
@@ -579,12 +656,12 @@
                             <div class="col-1" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: #1261A0;">
 
                             </div>
                             <div class="col-5">
@@ -593,12 +670,12 @@
                             <div class="col-1" style="height: 5px; background-color: red;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i niedodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: blue;">
 
                             </div>
                             <div class="col-5">
@@ -607,13 +684,13 @@
                             <div class="col-1" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
 
                 <div id="dijkstraLegend" class="row mt-2" hidden>
@@ -630,18 +707,18 @@
                             <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 wierzchołek nieprzetworzony
                             </div>
                             <div class="col-1" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź nieprzetworzona
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: green;">
 
                             </div>
                             <div class="col-5">
@@ -650,12 +727,12 @@
                             <div class="col-1" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: #1261A0;">
 
                             </div>
                             <div class="col-5">
@@ -664,12 +741,12 @@
                             <div class="col-1" style="height: 5px; background-color: red;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i niedodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: blue;">
 
                             </div>
                             <div class="col-5">
@@ -678,13 +755,13 @@
                             <div class="col-1" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
 
                 <div id="bellmanFordLegend" class="row mt-2" hidden>
@@ -701,18 +778,18 @@
                             <div class="col-1 rounded-circle" style="height: 50px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 wierzchołek nieprzetworzony
                             </div>
                             <div class="col-1" style="height: 5px; background-color: black;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź nieprzetworzona
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: green;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: green;">
 
                             </div>
                             <div class="col-5">
@@ -721,12 +798,12 @@
                             <div class="col-1" style="height: 5px; background-color: green;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i dodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: #1261A0;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: #1261A0;">
 
                             </div>
                             <div class="col-5">
@@ -735,12 +812,12 @@
                             <div class="col-1" style="height: 5px; background-color: red;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 krawędź przetworzona i niedodana do drzewa wynikowego
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-1 rounded-circle"  style="height: 50px; background-color: blue;">
+                            <div class="col-1 rounded-circle" style="height: 50px; background-color: blue;">
 
                             </div>
                             <div class="col-5">
@@ -749,13 +826,13 @@
                             <div class="col-1" style="height: 5px; background-color: blue;">
 
                             </div>
-                            <div class="col-5" >
+                            <div class="col-5">
                                 aktualnie przetwarzana krawędź
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>

@@ -31,22 +31,6 @@ $(function () {
             $('#previous').prop('disabled', false);
             $('#info').text(infoTable[imageNumber-1]);
             $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
-            // $.ajax({
-            //     url: '/image/1',
-            //     type: 'POST',
-            //     success: function (response) {
-            //         console.log(response);
-            //         path = "../static/images/img_" + response + ".png?rand=" + Math.random();
-            //         $("#graph").attr("src", path);
-            //         if (response == numberOfSteps) {
-            //             $('#next').prop('disabled', true);
-            //         }
-            //         $('#previous').prop('disabled', false);
-            //     },
-            //     error: function (error) {
-            //         console.log(error);
-            //     }
-            // });
         }
     });
 });
@@ -65,22 +49,6 @@ $(function () {
             $('#next').prop('disabled', false);
             $('#info').text(infoTable[imageNumber-1]);
             $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
-            // $.ajax({
-            //     url: '/image/-1',
-            //     type: 'POST',
-            //     success: function (response) {
-            //         console.log(response);
-            //         path = "../static/images/img_" + response + ".png?rand=" + Math.random();
-            //         $("#graph").attr("src", path);
-            //         if (response == 1) {
-            //             $('#previous').prop('disabled', true);
-            //         }
-            //         $('#next').prop('disabled', false);
-            //     },
-            //     error: function (error) {
-            //         console.log(error);
-            //     }
-            // });
         }
     });
 });
@@ -102,12 +70,8 @@ $(function () {
                     $('#end').attr('min', 0);
                     $('#beginning').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
                     $('#end').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
-                    $('#collapseThree').collapse('show');
+                    $('#setEdgesCollapse').collapse('show');
                     $('#graphProperties').prop('hidden', false);
-
-                    //setGraphType();
-
-                    //setAlgorithm();
                 },
                 error: function (error) {
                     console.log(error);
@@ -233,7 +197,7 @@ $(function () {
                 },
                 success: function (response) {
                     $('#startVertexLabel').text($('#startVertex').val());
-                    $('#collapseSix').collapse('show');
+                    $('#drawGraphCollapse').collapse('show');
                 },
                 error: function (error) {
 
@@ -254,7 +218,7 @@ $(function () {
                 },
                 success: function (response) {
                     setGraphType();
-                    $('#collapseTwo').collapse('show');
+                    $('#setNumberOfVerticesCollapse').collapse('show');
                 },
                 error: function (error) {
 
@@ -272,7 +236,6 @@ $(function () {
     });
 });
 
-
 $(function () {
     $('#algorithmTypeButton').on({
         'click': function () {
@@ -284,10 +247,55 @@ $(function () {
                 },
                 success: function (response) {
                     setAlgorithm();
-                    $('#collapseFive').collapse('show');
+                    $('#startVertexCollapse').collapse('show');
+                },
+                error: function (error) {
+
                 }
             });
-            
+        }
+    });
+});
+
+$(function () {
+    $('#setEdgesManuallyButton').on({
+        'click': function () {
+            $('#setEdgesManually').prop('hidden', false);
+            $('#setClassOfGraph').prop('hidden', true);
+            $('#adjacencyListTableRow').prop('hidden', false);
+            $('#classOfGraphRow').prop('hidden', true);
+        }
+    });
+});
+
+$(function () {
+    $('#setClassOfGraphButton').on({
+        'click': function () {
+            $('#setEdgesManually').prop('hidden', true);
+            $('#setClassOfGraph').prop('hidden', false);
+            $('#adjacencyListTableRow').prop('hidden', true);
+            $('#classOfGraphRow').prop('hidden', false);
+        }
+    });
+});
+
+$(function () {
+    $('#confirmClassOfGraphButton').on({
+        'click': function () {
+            console.log($('input[type=radio][name=classOfGraph]:checked').val())
+            $.ajax({
+                url: '/graphClass',
+                type: 'GET',
+                data: {
+                    class: $('input[type=radio][name=classOfGraph]:checked').val()
+                },
+                success: function (response) {
+                    $('#classOfGraphLabel').text($('input[type=radio][name=classOfGraph]:checked').val());
+                },
+                error: function (error) {
+
+                }
+            });
         }
     });
 });
@@ -295,34 +303,10 @@ $(function () {
 
 function setGraphType() {
     $("#graphTypeLabel").text($('input[type=radio][name=graphType]:checked').val());
-    // if(graphType == 'simpleGraph') {
-    //     $("#graphTypeLabel").text("Graf prosty");
-    // }
-    // else if(graphType == 'directedGraph') {
-    //     $("#graphTypeLabel").text("Digraf prosty");
-    // }
 }
 
 function setAlgorithm() {
     $("#algorithmLabel").text($('input[type=radio][name=algorithmType]:checked').val());
-    // if(algorithmType == 'bfs') {
-    //     $("#algorithmLabel").text("Przeszukiwanie wszerz (BFS)");
-    // }
-    // else if(algorithmType == 'dfs') {
-    //     $("#algorithmLabel").text("Przeszukiwanie w głąb (DFS)");
-    // }
-    // else if(algorithmType == 'kruskal') {
-    //     $("#algorithmLabel").text("Algorytm Kruskala");
-    // }
-    // else if(algorithmType == 'dijkstra') {
-    //     $("#algorithmLabel").text("Algorytm Dijkstry");
-    // }
-    // else if(algorithmType == 'prim') {
-    //     $("#algorithmLabel").text("Algorytm Prima");
-    // }
-    // else if(algorithmType == 'bellmanFord') {
-    //     $("#algorithmLabel").text("Algorytm Bellmana-Forda");
-    // }
 }
 
 function randomInt(min, max) {
