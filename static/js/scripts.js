@@ -291,6 +291,7 @@ $(function () {
                 },
                 success: function (response) {
                     $('#classOfGraphLabel').text($('input[type=radio][name=classOfGraph]:checked').val());
+                    $('#setAlgorithmCollapse').collapse('show');
                 },
                 error: function (error) {
 
@@ -317,8 +318,7 @@ function randomInt(min, max) {
 
 function hideLegends() {
     $('#searchLegend').prop('hidden', true);
-    $('#primLegend').prop('hidden', true);
-    $('#kruskalLegend').prop('hidden', true);
+    $('#mstLegend').prop('hidden', true);
     $('#dijkstraLegend').prop('hidden', true);
     $('#bellmanFordLegend').prop('hidden', true);
 }
@@ -339,10 +339,10 @@ function showLegend() {
         $('#bellmanFordLegend').prop('hidden', false);
     }
     else if(algorithm == 'Algorytm Kruskala'){
-        $('#kruskalLegend').prop('hidden', false);
+        $('#mstLegend').prop('hidden', false);
     }
     else if(algorithm == 'Algorytm Prima'){
-        $('#primLegend').prop('hidden', false);
+        $('#mstLegend').prop('hidden', false);
     }
         
 }

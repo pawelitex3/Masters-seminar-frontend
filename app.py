@@ -294,9 +294,6 @@ def draw_Bellman_Ford(Graph, my_pos):
         start_current_edge, end_current_edge = json_response['current_edge']
         info_table.append(info)
 
-        # for v, u in red_edges:
-        #     Graph[v][u]['color'] = 'red'
-
         for v, u in green_edges:
             Graph[v][u]['color'] = 'green'
 
@@ -312,7 +309,6 @@ def draw_Bellman_Ford(Graph, my_pos):
         plt.cla()
 
     return jsonify(info_table)
-    return 'success'
 
 
 @app.route("/draw/", methods=['GET'])
