@@ -78,7 +78,7 @@ def set_class_of_graph():
         print(f"{u} {v}")
         adjacency_list[u].append(v)
         adjacency_list[v].append(u)
-        weight = random.randint(0, 30)
+        weight = random.randint(1, 30)
         weights[u].append(weight)
         weights[v].append(weight)
 
@@ -92,12 +92,12 @@ def draw_search_algorithms(Graph, my_pos, algorithm='BFS'):
         'start_vertex': start_vertex
     }
 
+    node_colors = ['black' for _ in range(number_of_vertices)]
+
     info_table = []
     res = requests.post(
         f'http://127.0.0.1:5000/api/{algorithm}',
         json=data_to_send)
-
-    node_colors = ['black' for _ in range(number_of_vertices)]
 
     for i in range(len(res.json())):
 
@@ -271,16 +271,15 @@ def draw_Bellman_Ford(Graph, my_pos):
     info_table = []
 
     data_to_send = {
-        # number_of_vertices)],
         'vertices': [i for i in range(number_of_vertices)],
-        # [[1, 2], [3], [4], [2, 4], [5], [2]], #adjacency_list,
         'adjacency_list': adjacency_list,
         'start_vertex': start_vertex,
-        'weights': weights  # [[2, 10], [3], [5], [1, 15], [9], [7]] #weights
+        'weights': weights
     }
 
     res = requests.post(
-        f'http://127.0.0.1:5000/api/BellmanFord', json=data_to_send)
+        f'http://127.0.0.1:5000/api/BellmanFord',
+        json=data_to_send)
 
     for i in range(len(res.json())):
         for u, v in Graph.edges():
@@ -288,18 +287,17 @@ def draw_Bellman_Ford(Graph, my_pos):
         json_response = res.json()[i]
         node_colors = ['black' for _ in range(number_of_vertices)]
         green_edges = json_response['green_edges']
-        #step_number = json_response['step_number']
         info = json_response['info']
         green_vertex = json_response['current_vertex']
-        start_current_edge, end_current_edge = json_response['current_edge']
+        start_edge, end_edge = json_response['current_edge']
         info_table.append(info)
 
         for v, u in green_edges:
             Graph[v][u]['color'] = 'green'
 
         node_colors[green_vertex] = 'green'
-        if start_current_edge != end_current_edge:
-            Graph[start_current_edge][end_current_edge]['color'] = 'blue'
+        if start_edge != end_edge:
+            Graph[start_edge][end_edge]['color'] = 'blue'
 
         edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
         nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF',
@@ -316,13 +314,10 @@ def draw_graph():
     global number_of_vertices, adjacency_list, algorithm, graph_type, edge_style, graph_weights
 
     edges = []
-    print(adjacency_list)
     for i in range(number_of_vertices):
         for j in range(len(adjacency_list[i])):
             edges.append((i, adjacency_list[i][j]))
-            #graph_weights[(i, j)] = weights[i][j]
 
-    print(weights)
     for u, v in edges:
         print(f"{u} {v}")
         index_of_v = adjacency_list[u].index(v)
@@ -340,8 +335,9 @@ def draw_graph():
 
     for u, v in Graph.edges():
         Graph[u][v]['color'] = 'black'
-
-    my_pos = nx.spring_layout(Graph, seed=random.randrange(10, 1000))
+    rseed = random.randrange(10, 1000)
+    print(rseed)
+    my_pos = nx.spring_layout(Graph, seed=999)
     nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800,
             font_color='#FFFFFF', node_color='black', connectionstyle=f'{edge_style}')
     if algorithm not in {'Przeszukiwanie wszerz (BFS)', 'Przeszukiwanie w głąb (DFS)'}:

@@ -116,7 +116,7 @@ $(function () {
             max = parseInt($('#numberOfVerticesInput').val());
             beginning = randomInt(0, max);
             end = randomInt(0, max);
-            weight = randomInt(0, 30);
+            weight = (randomInt(0, 30)+1);
             while(beginning == end){
                 end = randomInt(0, max);
             }
