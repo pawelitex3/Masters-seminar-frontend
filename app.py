@@ -335,9 +335,9 @@ def draw_graph():
 
     for u, v in Graph.edges():
         Graph[u][v]['color'] = 'black'
-    rseed = random.randrange(10, 1000)
-    print(rseed)
-    my_pos = nx.spring_layout(Graph, seed=999)
+    # rseed = random.randrange(10, 1000)
+    # print(rseed)
+    my_pos = nx.spring_layout(Graph, seed=random.randrange(10, 1000))
     nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800,
             font_color='#FFFFFF', node_color='black', connectionstyle=f'{edge_style}')
     if algorithm not in {'Przeszukiwanie wszerz (BFS)', 'Przeszukiwanie w głąb (DFS)'}:
