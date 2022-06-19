@@ -160,9 +160,7 @@ def drawMST(Graph, my_pos, algorithm):
         start_current_edge, end_current_edge = json_response['current_edge']
         red_edges = json_response['red_edges']
         green_edges = json_response['green_edges']
-        #parents = json_response['parents']
         step_number = json_response['step_number']
-        #visited = json_response['visited']
         green_vertices = json_response['green_vertices']
         info = json_response['info']
 
@@ -210,12 +208,10 @@ def draw_Dijkstra(Graph, my_pos):
     info_table = []
 
     data_to_send = {
-        # number_of_vertices)],
         'vertices': [i for i in range(number_of_vertices)],
-        # [[1, 2], [3], [4], [2, 4], [5], [2]], #adjacency_list,
         'adjacency_list': adjacency_list,
         'start_vertex': start_vertex,
-        'weights': weights  # [[2, 10], [3], [5], [1, 15], [9], [7]] #weights
+        'weights': weights  
     }
 
     res = requests.post(
@@ -226,20 +222,11 @@ def draw_Dijkstra(Graph, my_pos):
         for u, v in Graph.edges():
             Graph[u][v]['color'] = 'black'
         json_response = res.json()[i]
-        #start_current_edge, end_current_edge = json_response['current_edge']
-        #red_edges = json_response['red_edges']
         green_edges = json_response['green_edges']
-        #parents = json_response['parents']
-        step_number = json_response['step_number']
-        #visited = json_response['visited']
         green_vertices = json_response['green_vertices']
         info = json_response['info']
-        current_vertex = json_response['min_cost_vertex']
         start_current_edge, end_current_edge = json_response['current_edge']
         info_table.append(info)
-
-        # for v, u in red_edges:
-        #     Graph[v][u]['color'] = 'red'
 
         for v, u in green_edges:
             Graph[v][u]['color'] = 'green'
@@ -250,12 +237,6 @@ def draw_Dijkstra(Graph, my_pos):
         print(f"{start_current_edge} {end_current_edge}")
         if start_current_edge != end_current_edge and Graph[start_current_edge][end_current_edge]['color'] != 'green':
             Graph[start_current_edge][end_current_edge]['color'] = 'blue'
-
-        #node_colors[current_vertex] = 'blue'
-
-        # if start_current_edge != end_current_edge and step_number < len(res.json())-1:
-        #     if Graph[start_current_edge][end_current_edge]['color'] not in {'red', 'green'}:
-        #         Graph[start_current_edge][end_current_edge]['color'] = 'blue'
 
         edge_colors = [Graph[u][v]['color'] for u, v in Graph.edges()]
         nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800, font_color='#FFFFFF',
