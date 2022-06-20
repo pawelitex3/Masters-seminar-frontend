@@ -2,7 +2,6 @@ from cmath import inf
 from flask import Flask, render_template, request, jsonify
 import networkx as nx
 import matplotlib.pyplot as plt
-import shutil
 import requests
 import random
 
@@ -25,8 +24,10 @@ def main():
 
 @app.route("/vertices/<no_vertices>", methods=['POST'])
 def set_number_of_vertices(no_vertices):
-    global number_of_vertices
+    global number_of_vertices, adjacency_list, weights
     number_of_vertices = int(no_vertices)
+    adjacency_list = []
+    weights = []
     for _ in range(number_of_vertices):
         adjacency_list.append([])
         weights.append([])
@@ -75,13 +76,90 @@ def set_class_of_graph():
         Graph = nx.complete_graph(number_of_vertices)
 
     for u, v in Graph.edges():
-        print(f"{u} {v}")
         adjacency_list[u].append(v)
         adjacency_list[v].append(u)
         weight = random.randint(1, 30)
         weights[u].append(weight)
         weights[v].append(weight)
 
+    return 'success'
+
+
+@app.route("/draw/", methods=['GET'])
+def draw_graph():
+    global number_of_vertices, adjacency_list, algorithm, graph_type, edge_style, graph_weights
+
+    edges = []
+    for i in range(number_of_vertices):
+        for j in range(len(adjacency_list[i])):
+            edges.append((i, adjacency_list[i][j]))
+
+    for u, v in edges:
+        index_of_v = adjacency_list[u].index(v)
+        graph_weights[(u, v)] = weights[u][index_of_v]
+
+    if graph_type == 'Graf prosty':
+        Graph = nx.Graph()
+        edge_style = 'arc3,rad=0.'
+    elif graph_type == 'Digraf prosty':
+        Graph = nx.DiGraph()
+        edge_style = 'arc3,rad=0.1'
+
+    Graph.add_nodes_from([i for i in range(number_of_vertices)])
+    Graph.add_edges_from(edges)
+
+    for u, v in Graph.edges():
+        Graph[u][v]['color'] = 'black'
+    my_pos = nx.spring_layout(Graph, seed=random.randrange(10, 1000))
+    nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800,
+            font_color='#FFFFFF', node_color='black', connectionstyle=f'{edge_style}')
+    if algorithm not in {'Przeszukiwanie wszerz (BFS)', 'Przeszukiwanie w głąb (DFS)'}:
+        nx.draw_networkx_edge_labels(Graph, my_pos, edge_labels=graph_weights, font_color='black')
+    plt.savefig("./static/images/img_0.png")
+    plt.cla()
+
+    if algorithm == 'Przeszukiwanie wszerz (BFS)':
+        return draw_search_algorithms(Graph, my_pos, 'BFS')
+    elif algorithm == 'Przeszukiwanie w głąb (DFS)':
+        return draw_search_algorithms(Graph, my_pos, 'DFS')
+    elif algorithm == 'Algorytm Dijkstry':
+        return draw_Dijkstra(Graph, my_pos)
+    elif algorithm == 'Algorytm Bellmana-Forda':
+        return draw_Bellman_Ford(Graph, my_pos)
+    elif algorithm == 'Algorytm Kruskala':
+        return drawMST(Graph, my_pos, 'Kruskal')
+    elif algorithm == 'Algorytm Prima':
+        return drawMST(Graph, my_pos, 'PrimDijkstra')
+
+
+@app.route("/reset", methods=['DELETE'])
+def reset():
+    global image_number, number_of_vertices, adjacency_list, weights
+    image_number = 1
+    number_of_vertices = 0
+    adjacency_list = []
+    weights = []
+    return 'deleted'
+
+
+@app.route("/startVertex", methods=['GET'])
+def setStartVertex():
+    global start_vertex
+    start_vertex = int(request.args.get('startVertex'))
+    return 'success'
+
+
+@app.route("/algorithm", methods=['GET'])
+def setAlgorithm():
+    global algorithm
+    algorithm = request.args.get('algorithm')
+    return 'success'
+
+
+@app.route("/graphType", methods=['GET'])
+def setGraphType():
+    global graph_type
+    graph_type = request.args.get('graphType')
     return 'success'
 
 
@@ -199,7 +277,6 @@ def drawMST(Graph, my_pos, algorithm):
         plt.cla()
         info_table.append(
             'Wynik działania algorytmu. Dodanie dowolnej z pozostałych krawędzi spowoduje powstanie cyklu.')
-        # return str(len(res.json())+1)
 
     return jsonify(info_table)
 
@@ -217,7 +294,6 @@ def draw_Dijkstra(Graph, my_pos):
     res = requests.post(
         f'http://127.0.0.1:5000/api/Dijkstra', json=data_to_send)
     node_colors = ['black' for _ in range(number_of_vertices)]
-    print(res.json())
     for i in range(len(res.json())):
         for u, v in Graph.edges():
             Graph[u][v]['color'] = 'black'
@@ -234,7 +310,6 @@ def draw_Dijkstra(Graph, my_pos):
         for u in green_vertices:
             node_colors[u] = 'green'
 
-        print(f"{start_current_edge} {end_current_edge}")
         if start_current_edge != end_current_edge and Graph[start_current_edge][end_current_edge]['color'] != 'green':
             Graph[start_current_edge][end_current_edge]['color'] = 'blue'
 
@@ -288,90 +363,6 @@ def draw_Bellman_Ford(Graph, my_pos):
         plt.cla()
 
     return jsonify(info_table)
-
-
-@app.route("/draw/", methods=['GET'])
-def draw_graph():
-    global number_of_vertices, adjacency_list, algorithm, graph_type, edge_style, graph_weights
-
-    edges = []
-    for i in range(number_of_vertices):
-        for j in range(len(adjacency_list[i])):
-            edges.append((i, adjacency_list[i][j]))
-
-    for u, v in edges:
-        print(f"{u} {v}")
-        index_of_v = adjacency_list[u].index(v)
-        graph_weights[(u, v)] = weights[u][index_of_v]
-
-    if graph_type == 'Graf prosty':
-        Graph = nx.Graph()
-        edge_style = 'arc3,rad=0.'
-    elif graph_type == 'Digraf prosty':
-        Graph = nx.DiGraph()
-        edge_style = 'arc3,rad=0.1'
-
-    Graph.add_nodes_from([i for i in range(number_of_vertices)])
-    Graph.add_edges_from(edges)
-
-    for u, v in Graph.edges():
-        Graph[u][v]['color'] = 'black'
-    # rseed = random.randrange(10, 1000)
-    # print(rseed)
-    my_pos = nx.spring_layout(Graph, seed=random.randrange(10, 1000))
-    nx.draw(Graph, pos=my_pos, with_labels=True, node_size=800,
-            font_color='#FFFFFF', node_color='black', connectionstyle=f'{edge_style}')
-    if algorithm not in {'Przeszukiwanie wszerz (BFS)', 'Przeszukiwanie w głąb (DFS)'}:
-        nx.draw_networkx_edge_labels(Graph, my_pos, edge_labels=graph_weights, font_color='black')
-    plt.savefig("./static/images/img_0.png")
-    plt.cla()
-
-    print(algorithm)
-
-    if algorithm == 'Przeszukiwanie wszerz (BFS)':
-        return draw_search_algorithms(Graph, my_pos, 'BFS')
-    elif algorithm == 'Przeszukiwanie w głąb (DFS)':
-        return draw_search_algorithms(Graph, my_pos, 'DFS')
-    elif algorithm == 'Algorytm Dijkstry':
-        return draw_Dijkstra(Graph, my_pos)
-    elif algorithm == 'Algorytm Bellmana-Forda':
-        return draw_Bellman_Ford(Graph, my_pos)
-    elif algorithm == 'Algorytm Kruskala':
-        return drawMST(Graph, my_pos, 'Kruskal')
-    elif algorithm == 'Algorytm Prima':
-        return drawMST(Graph, my_pos, 'PrimDijkstra')
-
-
-@app.route("/reset", methods=['DELETE'])
-def reset():
-    global image_number, number_of_vertices, adjacency_list, weights
-    image_number = 1
-    number_of_vertices = 0
-    adjacency_list = []
-    weights = []
-    return 'deleted'
-
-
-@app.route("/startVertex", methods=['GET'])
-def setStartVertex():
-    global start_vertex
-    start_vertex = int(request.args.get('startVertex'))
-    return 'success'
-
-
-@app.route("/algorithm", methods=['GET'])
-def setAlgorithm():
-    global algorithm
-    algorithm = request.args.get('algorithm')
-    print(algorithm)
-    return 'success'
-
-
-@app.route("/graphType", methods=['GET'])
-def setGraphType():
-    global graph_type
-    graph_type = request.args.get('graphType')
-    return 'success'
 
 
 if __name__ == "__main__":
