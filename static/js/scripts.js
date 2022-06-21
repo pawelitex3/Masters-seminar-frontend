@@ -2,23 +2,6 @@ var numberOfSteps = 1
 var imageNumber = 0
 var infoTable = []
 
-// Obsluga przycisku do ustalania liczby wierzcholkow
-// $(function () {
-//     $('#vertex').click(function () {
-//         $.ajax({
-//             url: '/vertex/' + $('#numberOfVerticesInput').val(),
-//             type: 'POST',
-//             success: function (response) {
-//                 console.log(response);
-//                 console.log($('#numberOfVerticesInput').val());
-//             },
-//             error: function (error) {
-//                 console.log(error);
-//             }
-//         });
-//     });
-// });
-
 // Obsluga przycisku pozwalajacego na przejscie do kolejnego kroku algorytmu
 $(function () {
     $('#next').on({
@@ -61,7 +44,6 @@ $(function () {
                 url: '/vertices/' + $('#numberOfVerticesInput').val(),
                 type: 'POST',
                 success: function (response) {
-                    console.log(response);
                     id = "neighbour_vertex_"
                     for (var i = 0; i < parseInt($('#numberOfVerticesInput').val()); i++) {
                         $("#adjacencyListTable").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
@@ -97,13 +79,12 @@ $(function () {
                 end: $('#end').val(),
                 weight: $('#weight').val()
             };
-            console.log(data_test);
             $.ajax({
                 url: '/edges/',
                 type: 'GET',
                 data: data_test,
                 success: function (response) {
-                    console.log(response);
+                    // Wpisanie krawedzi do tabeli w postaci list sasiedztwa
                     $("#neighbour_vertex_" + $('#beginning').val()).append(" " + $('#end').val() + "(" + $('#weight').val() + ")");
                     if($('input[type=radio][name=graphType]:checked').val() == 'Graf prosty'){
                         $("#neighbour_vertex_" + $('#end').val()).append(" " + $('#beginning').val() + "(" + $('#weight').val() + ")");
@@ -122,6 +103,7 @@ $(function () {
 $(function () {
     $('#randEdgeButton').on({
         'click': function () {
+            // Losowanie wartosci krawedzi i wagi
             max = parseInt($('#numberOfVerticesInput').val());
             beginning = randomInt(0, max);
             end = randomInt(0, max);
@@ -129,6 +111,8 @@ $(function () {
             while(beginning == end){
                 end = randomInt(0, max);
             }
+
+            // Wprowadzenie wartosci do odpowiednich pol
             $('#beginning').val(beginning);
             $('#end').val(end);
             $('#weight').val(weight);
@@ -146,19 +130,27 @@ $(function () {
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response);
+
+                    // Wyswietlenie informacji o aktualnym kroku
                     infoTable = response
-                    path = "../static/images/img_0.png?rand=" + Math.random();
-                    $("#graph").attr("src", path);
-                    $('#next').prop('disabled', false);
-                    numberOfSteps = response.length;
-                    imageNumber = 0;
-                    $('#previous').prop('disabled', true);
-                    $('#next').prop('disabled', false);
                     $('#info').text('Graf początkowy');
                     $('#infoLabel').prop('hidden', false);
-                    $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
                     showLegend();
+                    
+                    // Wyswietlenie numeru aktualnego kroku
+                    imageNumber = 0;
+                    numberOfSteps = response.length;
+                    $('#counter').text('Krok ' + (imageNumber+1) + ' / ' + (numberOfSteps+1));
+
+                    // Wyswietlenie obrazka przedstawiajacego graf wyjsciowy
+                    path = "../static/images/img_0.png?rand=" + Math.random();
+                    $("#graph").attr("src", path);
+                    
+                    // Aktywacja przyciskow do nawigacji miedzy kolejnymi krokami
+                    $('#previous').prop('disabled', true);
+                    $('#next').prop('disabled', false);
+
+                    // Ukrycie loading spinnera
                     $('#loadingSpinner').prop('hidden', true);
                 },
                 error: function (error) {
@@ -177,17 +169,26 @@ $(function () {
                 url: '/reset',
                 type: 'DELETE',
                 success: function (response) {
+                    // Wyswietlenie pustego obrazka
                     $("#graph").attr("src", "../static/images/img.png?rand=" + Math.random());
+
+                    // Wyzerowanie etykiet z wlasciwosciami grafu
                     $("#graphProperties").prop("hidden", true);
                     $('#numberOfVerticesLabel').text("");
                     $("#adjacencyListTable").text("");
+
+                    // Wyzerowanie licznika krokow oraz informacji o aktualnym kroku
                     $('#counter').text('');
                     $('#info').text('');
                     $('#infoLabel').prop('hidden', true);
+
+                    // Powrot do pierwszego kroku
+                    $('#setTypeOfGraphCollapse').collapse('show');
+
                     hideLegends();
                 },
                 error: function (error) {
-
+                    console.log(error)
                 }
             });
         }
@@ -198,7 +199,6 @@ $(function () {
 $(function () {
     $('#addStartVertex').on({
         'click': function () {
-            console.log($('#startVertex').val());
             $.ajax({
                 url: '/startVertex',
                 type: 'GET',
@@ -206,11 +206,14 @@ $(function () {
                     startVertex: $('#startVertex').val()
                 },
                 success: function (response) {
+                    // Ustalenie etykiety dotyczacej wierzcholka startowego
                     $('#startVertexLabel').text($('#startVertex').val());
+
+                    // Przejscie do kolejnego kroku na liscie rozwijanej (akordeonie) 
                     $('#drawGraphCollapse').collapse('show');
                 },
                 error: function (error) {
-
+                    console.log(error)
                 }
             });
         }
@@ -228,17 +231,24 @@ $(function () {
                     graphType: $('input[type=radio][name=graphType]:checked').val()
                 },
                 success: function (response) {
+                    // Ustalenie etykiety dotyczacej wybranego typu grafu
                     setGraphType();
+
+                    // Przejscie do kolejnego kroku na liscie rozwijanej (akordeonie) 
                     $('#setNumberOfVerticesCollapse').collapse('show');
                 },
                 error: function (error) {
-
+                    console.log(error)
                 }
             });
+
+            // Jesli wybrano digraf prosty, wybor algorytmu Kruskala i Prima jest zablokowany
             if ($('input[type=radio][name=graphType]:checked').val() == 'Digraf prosty') {
                 $('#kruskal').prop('disabled', true);
                 $('#prim').prop('disabled', true);
             }
+
+            // Jesli wybrano graf prosty, wybor algorytmu Kruskala i Prima jest odblokowany
             else {
                 $('#kruskal').prop('disabled', false);
                 $('#prim').prop('disabled', false);
@@ -258,11 +268,14 @@ $(function () {
                     algorithm: $('input[type=radio][name=algorithmType]:checked').val()
                 },
                 success: function (response) {
+                    // Ustalenie etykiety dotyczacej wybranego algorytmu
                     setAlgorithm();
+
+                    // Przejscie do kolejnego kroku na liscie rozwijanej (akordeonie) 
                     $('#startVertexCollapse').collapse('show');
                 },
                 error: function (error) {
-
+                    console.log(error);
                 }
             });
         }
@@ -274,8 +287,8 @@ $(function () {
     $('#setEdgesManuallyButton').on({
         'click': function () {
             $('#setEdgesManually').prop('hidden', false);
-            $('#setClassOfGraph').prop('hidden', true);
             $('#adjacencyListTableRow').prop('hidden', false);
+            $('#setClassOfGraph').prop('hidden', true);
             $('#classOfGraphRow').prop('hidden', true);
         }
     });
@@ -286,8 +299,8 @@ $(function () {
     $('#setClassOfGraphButton').on({
         'click': function () {
             $('#setEdgesManually').prop('hidden', true);
-            $('#setClassOfGraph').prop('hidden', false);
             $('#adjacencyListTableRow').prop('hidden', true);
+            $('#setClassOfGraph').prop('hidden', false);
             $('#classOfGraphRow').prop('hidden', false);
         }
     });
@@ -297,7 +310,6 @@ $(function () {
 $(function () {
     $('#confirmClassOfGraphButton').on({
         'click': function () {
-            console.log($('input[type=radio][name=classOfGraph]:checked').val())
             $.ajax({
                 url: '/graphClass',
                 type: 'GET',
@@ -305,11 +317,14 @@ $(function () {
                     class: $('input[type=radio][name=classOfGraph]:checked').val()
                 },
                 success: function (response) {
+                    // Ustawienie etykiety dotyczacej wybranej klasy grafu
                     $('#classOfGraphLabel').text($('input[type=radio][name=classOfGraph]:checked').val());
+
+                    // Przejscie do kolejnego kroku na liscie rozwijanej (akordeonie)
                     $('#setAlgorithmCollapse').collapse('show');
                 },
                 error: function (error) {
-
+                    console.log(error);
                 }
             });
         }
