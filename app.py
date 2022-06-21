@@ -85,15 +85,30 @@ def set_class_of_graph():
         Graph = nx.random_regular_graph(3, number_of_vertices)
 
     elif class_graph == 'Graf losowy':
-        for i in range(number_of_vertices):
-            for j in range(i+1, number_of_vertices):
-                choice = randint(1, 10)
-                if choice < 6:
-                    weight = randint(1, 30)
-                    adjacency_list[i].append(j)
-                    adjacency_list[j].append(i)
-                    weights[i].append(weight)
-                    weights[j].append(weight)
+
+        # Jesli wybrano graf prosty, dodaj krawedze (i, j) oraz (j, i)
+        if graph_type == 'Graf prosty':
+            for i in range(number_of_vertices):
+                for j in range(i+1, number_of_vertices):
+                    choice = randint(1, 10)
+                    if choice < 6:
+                        weight = randint(1, 30)
+                        adjacency_list[i].append(j)
+                        adjacency_list[j].append(i)
+                        weights[i].append(weight)
+                        weights[j].append(weight)
+
+        # W przeciwnym przypadku dodaj krawedz (i, j)
+        else:
+            for i in range(number_of_vertices):
+                for j in range(number_of_vertices):
+                    if i != j:
+                        choice = randint(1, 10)
+                        if choice < 6:
+                            weight = randint(1, 30)
+                            adjacency_list[i].append(j)
+                            weights[i].append(weight)
+                            
         return 'success'
 
     elif class_graph == 'Graf pełny':
