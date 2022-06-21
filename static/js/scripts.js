@@ -2,23 +2,24 @@ var numberOfSteps = 1
 var imageNumber = 0
 var infoTable = []
 
-$(function () {
-    $('#vertex').click(function () {
+// Obsluga przycisku do ustalania liczby wierzcholkow
+// $(function () {
+//     $('#vertex').click(function () {
+//         $.ajax({
+//             url: '/vertex/' + $('#numberOfVerticesInput').val(),
+//             type: 'POST',
+//             success: function (response) {
+//                 console.log(response);
+//                 console.log($('#numberOfVerticesInput').val());
+//             },
+//             error: function (error) {
+//                 console.log(error);
+//             }
+//         });
+//     });
+// });
 
-        $.ajax({
-            url: '/vertex/' + $('#numberOfVerticesInput').val(),
-            type: 'POST',
-            success: function (response) {
-                console.log(response);
-                console.log($('#numberOfVerticesInput').val());
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });
-});
-
+// Obsluga przycisku pozwalajacego na przejscie do kolejnego kroku algorytmu
 $(function () {
     $('#next').on({
         'click': function () {
@@ -35,8 +36,7 @@ $(function () {
     });
 });
 
-
-
+// Obsluga przycisku pozwalajacego na przejscie do poprzedniego kroku algorytmu
 $(function () {
     $('#previous').on({
         'click': function () {
@@ -53,6 +53,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do ustalania liczby wierzcholkow w grafie
 $(function () {
     $('#numberOfVerticesButton').on({
         'click': function () {
@@ -65,11 +66,17 @@ $(function () {
                     for (var i = 0; i < parseInt($('#numberOfVerticesInput').val()); i++) {
                         $("#adjacencyListTable").append('<tr><td>' + i + '</td><td id="' + id + i + '"></td></tr>')
                     }
+                    
+                    // Wpisanie ustalonej liczby wierzcholkow do wlasciwosci grafu
                     $('#numberOfVerticesLabel').text($('#numberOfVerticesInput').val());
+
+                    // Ustalenie ograniczen dotyczacych zakresu numerow wierzcholkow przy wprowadzaniu krawedzi
                     $('#beginning').attr('min', 0);
                     $('#end').attr('min', 0);
                     $('#beginning').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
                     $('#end').attr('max', parseInt($('#numberOfVerticesInput').val()) - 1);
+
+                    // Otwarcie kolejnego kroku na liscie rozwijanej (akordeonie)
                     $('#setEdgesCollapse').collapse('show');
                     $('#graphProperties').prop('hidden', false);
                 },
@@ -81,6 +88,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do wprowadzenia krawedzi do grafu
 $(function () {
     $('#addEdgeButton').on({
         'click': function () {
@@ -110,6 +118,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do losowania krawedzi (przy wprowadzaniu krawedzi recznie)
 $(function () {
     $('#randEdgeButton').on({
         'click': function () {
@@ -127,8 +136,7 @@ $(function () {
     });
 });
 
-
-
+// Obsluga przycisku rozpoczynajacego proces tworzenia wizualizacji dzialania algorytmu grafowego
 $(function () {
     $('#draw').on({
         'click': function () {
@@ -161,6 +169,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do resetowania wlasciwosci grafu
 $(function () {
     $('#reset').on({
         'click': function () {
@@ -185,6 +194,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do wyboru wierzcholka starowego
 $(function () {
     $('#addStartVertex').on({
         'click': function () {
@@ -207,6 +217,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do wyboru typu grafu
 $(function () {
     $('#graphTypeButton').on({
         'click': function () {
@@ -236,6 +247,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do wyboru algorytmu, dla ktorego ma zostac stworzona wizualizacja
 $(function () {
     $('#algorithmTypeButton').on({
         'click': function () {
@@ -257,6 +269,7 @@ $(function () {
     });
 });
 
+// Obsluga przyciskow do wyboru metody wprowadzania krawedzi - reczne wprowadzenie krawedzi
 $(function () {
     $('#setEdgesManuallyButton').on({
         'click': function () {
@@ -268,6 +281,7 @@ $(function () {
     });
 });
 
+// Obsluga przyciskow do wyboru metody wprowadzania krawedzi - poprzez wybor klasy grafu
 $(function () {
     $('#setClassOfGraphButton').on({
         'click': function () {
@@ -279,6 +293,7 @@ $(function () {
     });
 });
 
+// Obsluga przycisku do wyboru klasy grafu
 $(function () {
     $('#confirmClassOfGraphButton').on({
         'click': function () {
@@ -301,21 +316,24 @@ $(function () {
     });
 });
 
-
+// Ustawienie etykiety dotyczacej wybranego typu grafu
 function setGraphType() {
     $("#graphTypeLabel").text($('input[type=radio][name=graphType]:checked').val());
 }
 
+// Ustawienie etykiety dotyczacej wybranego algorytmu
 function setAlgorithm() {
     $("#algorithmLabel").text($('input[type=radio][name=algorithmType]:checked').val());
 }
 
+// Losowanie liczby calkowitej z przedzialu od min do max
 function randomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+// Ukrywanie wszystkich legend pod rysunkami
 function hideLegends() {
     $('#searchLegend').prop('hidden', true);
     $('#mstLegend').prop('hidden', true);
@@ -323,6 +341,7 @@ function hideLegends() {
     $('#bellmanFordLegend').prop('hidden', true);
 }
 
+// Odsloniecie odpowiedniej legendy pod obrazkiem w zaleznosci od wybranego algorytmu
 function showLegend() {
     hideLegends();
     algorithm = $('input[type=radio][name=algorithmType]:checked').val()
